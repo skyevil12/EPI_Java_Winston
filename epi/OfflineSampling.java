@@ -7,9 +7,28 @@ import epi.test_framework.TimedExecutor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
 public class OfflineSampling {
   public static void randomSampling(int k, List<Integer> A) {
-    // TODO - you fill in here.
+    int n = A.size();
+    Random random = new Random();
+    boolean isReverse = false;
+    //Enhance if two much random.nextInt call
+    if(k > n / 2 && k < n) {
+      k = n - k;
+      isReverse = true;
+    }
+
+    //T O(K) S O(1)
+    for (int i = 0; i < k; i++) {
+      Collections.swap(A, i, i + random.nextInt(A.size() - i));
+    }
+
+    if(isReverse) {
+      Collections.reverse(A);
+    }
+
     return;
   }
   private static boolean randomSamplingRunner(TimedExecutor executor, int k,

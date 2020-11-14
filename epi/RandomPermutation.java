@@ -5,14 +5,28 @@ import epi.test_framework.RandomSequenceChecker;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 public class RandomPermutation {
 
   public static List<Integer> computeRandomPermutation(int n) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    /*List<Integer> list = new ArrayList<>(n);
+
+    for(int i = 0; i < n; i++) {
+      list.add(i);
+    }
+
+    OfflineSampling.randomSampling(n, list);
+
+    return list;*/
+
+    //Brute force hashMap?? Why not work?
+    Set<Integer> rtSet = new HashSet();
+    Random random = new Random();
+    while(rtSet.size() < n) {
+      rtSet.add(random.nextInt(n));
+    }
+    return new ArrayList<>(rtSet);
   }
   private static int factorial(int n) {
     return n <= 1 ? 1 : n * factorial(n - 1);

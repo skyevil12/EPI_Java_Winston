@@ -14,8 +14,16 @@ public class OnlineSampling {
   // Assumption: there are at least k elements in the stream.
   public static List<Integer> onlineRandomSample(Iterator<Integer> stream,
                                                  int k) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    //Brute force solution
+    List<Integer> list = new ArrayList<>();
+
+    while(stream.hasNext()) {
+      list.add(stream.next());
+    }
+
+    OfflineSampling.randomSampling(k, list);
+
+    return list.subList(0, k);
   }
   private static boolean onlineRandomSampleRunner(TimedExecutor executor,
                                                   List<Integer> A, int k)
