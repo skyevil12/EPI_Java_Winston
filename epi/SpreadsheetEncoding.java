@@ -5,8 +5,15 @@ public class SpreadsheetEncoding {
   @EpiTest(testDataFile = "spreadsheet_encoding.tsv")
 
   public static int ssDecodeColID(final String col) {
-    // TODO - you fill in here.
-    return 0;
+    int rt = 0;
+
+    //T O(N) S O(1)
+    for(char ch : col.toCharArray()) {
+      rt *= 26;
+      rt += (ch - 'A' + 1);
+    }
+
+    return rt;
   }
 
   public static void main(String[] args) {
