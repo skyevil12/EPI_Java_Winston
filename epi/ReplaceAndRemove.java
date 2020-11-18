@@ -8,8 +8,25 @@ import java.util.List;
 public class ReplaceAndRemove {
 
   public static int replaceAndRemove(int size, char[] s) {
-    // TODO - you fill in here.
-    return 0;
+    List<Character> list = new ArrayList<>();
+
+    for(int i = 0; i < size; i++) {
+      char cur = s[i];
+      if(cur == 'a') {
+        list.add('d');
+        list.add('d');
+      } else if(cur == 'b' || cur == 0) {
+        continue;
+      } else {
+        list.add(cur);
+      }
+    }
+
+    for(int i = 0; i < list.size(); i++) {
+      s[i] = list.get(i);
+    }
+
+    return list.size();
   }
   @EpiTest(testDataFile = "replace_and_remove.tsv")
   public static List<String>
