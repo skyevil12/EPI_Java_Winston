@@ -14,7 +14,7 @@ public class OfflineSampling {
     int n = A.size();
     Random random = new Random();
     boolean isReverse = false;
-    //Enhance if two much random.nextInt call
+    //Enhance if too much random.nextInt call
     if(k > n / 2 && k < n) {
       k = n - k;
       isReverse = true;

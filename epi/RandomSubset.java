@@ -5,15 +5,35 @@ import epi.test_framework.RandomSequenceChecker;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 public class RandomSubset {
 
   // Returns a random k-sized subset of {0, 1, ..., n - 1}.
   public static List<Integer> randomSubset(int n, int k) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    /*Set<Integer> rtSet = new HashSet<>();
+    Random random = new Random();
+
+    while(rtSet.size() < k) {
+      rtSet.add(random.nextInt(n));
+    }
+
+    return new ArrayList<>(rtSet);*/
+
+    List<Integer> list = new ArrayList<>();
+
+    //T O(N) S O(N)
+    for(int i = 0; i < n; i++) {
+      list.add(i);
+    }
+
+    //T O(K) S O(K) => output space
+    Random random = new Random();
+    for(int i = 0; i < k; i++) {
+      Collections.swap(list, i, i + random.nextInt(n - i));
+    }
+
+    return list.subList(0, k);
   }
   private static boolean randomSubsetRunner(TimedExecutor executor, int n,
                                             int k) throws Exception {
