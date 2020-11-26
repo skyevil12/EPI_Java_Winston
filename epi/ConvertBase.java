@@ -1,48 +1,51 @@
 package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
+
+import javax.crypto.spec.ChaCha20ParameterSpec;
+
 public class ConvertBase {
   @EpiTest(testDataFile = "convert_base.tsv")
 
   public static String convertBase(String numAsString, int b1, int b2) {
-    if(numAsString.equals("0") || numAsString.isEmpty()) {
+    //empty input or startWith negative/positive or input is "0"
+    //N is input length, T O(N) S O(N)
+    /*if(numAsString.isEmpty() || numAsString.equals("0")) {
       return numAsString;
-    }
-
-    int idx = 0;
-    boolean isNeg = false;
-
-    if(numAsString.charAt(idx) == '-') {
-      isNeg = true;
-      idx++;
-    } else if(numAsString.charAt(idx) == '+') {
-      idx++;
-    }
-
-    long rt = 0;
-    for(int i = idx; i < numAsString.length(); i++) {
-      char ch = numAsString.charAt(i);
-      rt *= b1;
-      rt += charToNum(ch);
     }
 
     StringBuilder rtSb = new StringBuilder();
 
-    while(rt > 0) {
-      long mod = rt % b2;
-      rtSb.insert(0, numToChar((int) mod));
-      rt /= b2;
+    boolean isNeg = false;
+    int st = 0;
+    if(numAsString.charAt(st) == '+') {
+      st++;
+    } else if(numAsString.charAt(st) == '-') {
+      isNeg = true;
+      st++;
+    }
+
+    long tmp = 0;
+    for(int i = st; i < numAsString.length(); i++) {
+      char ch = numAsString.charAt(i);
+      tmp = tmp * b1 + chToInt(ch);
+    }
+
+    while(tmp > 0) {
+      rtSb.append(numToChar((int) (tmp % b2)));
+      tmp /= b2;
     }
 
     if(isNeg) {
-      rtSb.insert(0, '-');
+      rtSb.append('-');
     }
 
-    return rtSb.toString();
+    return rtSb.reverse().toString();*/
+    return epi.kt.ConvertBase.INSTANCE.convertBase(numAsString, b1, b2);
   }
 
-  private static int charToNum(char ch) {
-    if(ch >= '0' && ch <= '9') {
+  private static int chToInt(char ch) {
+    if(Character.isDigit(ch)) {
       return ch - '0';
     } else {
       return ch - 'A' + 10;

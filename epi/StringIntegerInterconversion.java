@@ -5,51 +5,55 @@ import epi.test_framework.TestFailure;
 public class StringIntegerInterconversion {
 
   public static String intToString(int x) {
-    if(x == 0) {
+    //Edge case, consider the Integer.MIN_VALUE, use long instead
+    //suppose digit len of x is N, T O(N) S O(N)
+    /*if(x == 0) {
       return "0";
     }
 
-    long lx = x;
-    boolean isNeg = false;
-    StringBuilder rtSb = new StringBuilder();
-    //For Integer_MIN_VALUE to pos would be overflow
-    if(lx < 0) {
-      lx *= -1;
-      isNeg = true;
+    long lX = x;
+    boolean isNeg = lX < 0;
+    if(isNeg) {
+      lX *= -1;
     }
 
-    while(lx > 0) {
-      rtSb.append(lx % 10);
-      lx /= 10;
+    StringBuilder rtSb = new StringBuilder();
+    while(lX > 0) {
+      rtSb.append(lX % 10);
+      lX /= 10;
     }
 
     if(isNeg) {
       rtSb.append('-');
     }
 
-    return rtSb.reverse().toString();
+    return rtSb.reverse().toString();*/
+    return epi.kt.StringIntegerInterconversion.INSTANCE.integerToString(x);
   }
   public static int stringToInt(String s) {
-    int rt = 0, idx = 0;
+    //Exist the boundary case Integer.MIN String, overflow if I toggle it to positive, so use rt type long
+    //Supposed s only prefix '+' or '-' and there is no space inside
+    //T O(N) S O(1)
+    /*int st = 0;
     if(s.isEmpty()) {
-      return rt;
+      return st;
     }
-
     boolean isNeg = false;
-    if(s.charAt(idx) == '-') {
-      isNeg = true;
-      idx++;
-    } else if(s.charAt(idx) == '+') {
-      idx++;
+    if(!Character.isDigit(s.charAt(st))) {
+      if(s.charAt(st) == '-') {
+        isNeg = true;
+      }
+      st++;
     }
 
-    for(int i = idx; i < s.length(); i++) {
+    long rt = 0;
+    for(int i = st; i < s.length(); i++) {
       char ch = s.charAt(i);
-      rt *= 10;
-      rt += (ch - '0');
+      rt = rt * 10 + (ch - '0');
     }
 
-    return isNeg ? -rt : rt;
+    return (int) (isNeg ? -rt : rt);*/
+    return epi.kt.StringIntegerInterconversion.INSTANCE.stringToInteger(s);
   }
   @EpiTest(testDataFile = "string_integer_interconversion.tsv")
   public static void wrapper(int x, String s) throws TestFailure {
