@@ -4,10 +4,38 @@ import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 public class IsListCyclic {
-
+  /*
+    Edge case is null or single point
+    T O(N) s O(1)
+   */
   public static ListNode<Integer> hasCycle(ListNode<Integer> head) {
-    // TODO - you fill in here.
-    return null;
+    if(head == null) {
+      return null;
+    }
+
+    //No cycle return null, or return the start of the cycle
+    ListNode<Integer> slow = head, fast = head, conflict = null;
+    while(fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if(slow == fast) {
+        conflict = slow;
+        break;
+      }
+    }
+
+    if(conflict == null) {
+      return null;
+    }
+
+    while(true) {
+      if(head == conflict) {
+        return head;
+      }
+
+      head = head.next;
+      conflict = conflict.next;
+    }
   }
   @EpiTest(testDataFile = "is_list_cyclic.tsv")
   public static void HasCycleWrapper(TimedExecutor executor,
