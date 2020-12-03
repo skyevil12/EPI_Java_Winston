@@ -8,7 +8,7 @@ import java.util.List;
 public class ReplaceAndRemove {
 
   public static int replaceAndRemove(int size, char[] s) {
-    List<Character> list = new ArrayList<>();
+    /*List<Character> list = new ArrayList<>();
 
     for(int i = 0; i < size; i++) {
       char cur = s[i];
@@ -26,7 +26,36 @@ public class ReplaceAndRemove {
       s[i] = list.get(i);
     }
 
-    return list.size();
+    return list.size();*/
+    //T O(N) S O(1)
+    //Two pointer to remove 'b' and count rt size
+    /*int wIdx = 0, rt = size;
+    for(int i = 0; i < size; i++) {
+      char ch = s[i];
+      if(ch != 'b') {
+        if(ch == 'a') {
+          rt++;
+        }
+        s[wIdx++] = ch;
+      } else {
+        rt--;
+      }
+    }
+
+    int j = rt - 1;
+    //Set replacement of 'a' from backward
+    for(int i = wIdx - 1; i >= 0; i--) {
+      char ch = s[i];
+      if(ch == 'a') {
+        s[j--] = 'd';
+        s[j--] = 'd';
+      } else {
+        s[j--] = ch;
+      }
+    }
+
+    return rt;*/
+    return epi.kt.ReplaceAndRemove.INSTANCE.replaceAndRemove(size, s);
   }
   @EpiTest(testDataFile = "replace_and_remove.tsv")
   public static List<String>

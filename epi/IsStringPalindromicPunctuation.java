@@ -5,7 +5,7 @@ public class IsStringPalindromicPunctuation {
   @EpiTest(testDataFile = "is_string_palindromic_punctuation.tsv")
 
   public static boolean isPalindrome(String s) {
-    s = s.toLowerCase();
+    /*s = s.toLowerCase();
     int i = 0, j = s.length() - 1;
 
     while(i < j) {
@@ -28,7 +28,41 @@ public class IsStringPalindromicPunctuation {
       j--;
     }
 
-    return true;
+    return true;*/
+    //Empty return true?, upper and Lower case mixed, if we only need to take care the alpha numeric
+    //Is Case sensitive
+    //T O(N) S O(1)
+    /*int len = s.length(), left = 0, right = len - 1;
+
+    while(left < right) {
+      char lCh = s.charAt(left), rCh = s.charAt(right);
+      if(!isAlphaNumeric(lCh)) {
+        left++;
+        continue;
+      }
+
+      if(!isAlphaNumeric(rCh)) {
+        right--;
+        continue;
+      }
+
+      if(lowerCase(lCh) != lowerCase(rCh)) {
+        return false;
+      }
+      left++;
+      right--;
+    }
+
+    return true;*/
+    return epi.kt.IsStringPalindromicPunctuation.INSTANCE.isPalindrome(s);
+  }
+
+  private static char lowerCase(char ch) {
+    if(ch >= 'A' && ch <= 'Z') {
+      return (char) (ch - 'A' + 'a');
+    } else {
+      return ch;
+    }
   }
 
   private static boolean isAlphaNumeric(char ch) {
