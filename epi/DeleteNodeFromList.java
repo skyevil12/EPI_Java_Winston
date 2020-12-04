@@ -6,7 +6,11 @@ public class DeleteNodeFromList {
 
   // Assumes nodeToDelete is not tail.
   public static void deletionFromList(ListNode<Integer> nodeToDelete) {
-    // TODO - you fill in here.
+    /*Since the given node is not null and it is not tail(which means the node.next is non-null)
+      T O(1) S O(1)
+    */
+    nodeToDelete.data = nodeToDelete.next.data;
+    nodeToDelete.next = nodeToDelete.next.next;
     return;
   }
   @EpiTest(testDataFile = "delete_node_from_list.tsv")

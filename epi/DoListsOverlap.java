@@ -10,8 +10,75 @@ public class DoListsOverlap {
 
   public static ListNode<Integer> overlappingLists(ListNode<Integer> l0,
                                                    ListNode<Integer> l1) {
-    // TODO - you fill in here.
-    return null;
+    /*
+      0. No circle -> pass to previous solution
+      1. Only one has circle(l0 or l1), return null
+      2. Both has circle
+         Circle overlapped,
+         find each circle meet pt and check if one in another
+         Then check if meet before circle start
+         Then Circle not overlap if no result
+      Suppose l0 len M l1 len N
+      T O(M + N) S O(1)
+     */
+    ListNode c0 = null, c1 = null;
+
+    ListNode slow = l0, fast = l0;
+
+    while(fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if(slow == fast) {
+        c0 = slow;
+        break;
+      }
+    }
+
+    slow = l1;
+    fast = l1;
+    while(fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if(slow == fast) {
+        c1 = slow;
+        break;
+      }
+    }
+
+    if(c0 != null && c1 != null) {
+      ListNode tmpCur = l0;
+      while(tmpCur != c0) {
+        tmpCur = tmpCur.next;
+        c0 = c0.next;
+      }
+
+      tmpCur = l1;
+      while(tmpCur != c1) {
+        tmpCur = tmpCur.next;
+        c1 = c1.next;
+      }
+
+      slow = c1;
+      fast = c1;
+      while(true) {
+        if(slow == c0) {
+          return c0;
+        }
+
+        slow = slow.next;
+        fast = fast.next.next;
+        if(slow == fast) {
+          break;
+        }
+      }
+
+      c0.next = null;
+      c1.next = null;
+    } else if(c0 != null || c1 != null) {
+      return null;
+    }
+
+    return DoTerminatedListsOverlap.overlappingNoCycleLists(l0, l1);
   }
   @EpiTest(testDataFile = "do_lists_overlap.tsv")
   public static void
