@@ -4,26 +4,38 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+
 public class StackWithMax {
 
   public static class Stack {
+    //{max, cur}
+    Deque<int[]> stack = new ArrayDeque<>();
+    //T O(1)
     public boolean empty() {
-      // TODO - you fill in here.
-      return true;
+      return stack.isEmpty();
     }
+    //T O(1)
     public Integer max() {
-      // TODO - you fill in here.
-      return 0;
+      if(empty()) {
+        throw new RuntimeException("Empty stack!!");
+      }
+      return stack.peek()[0];
     }
+    //T O(1)
     public Integer pop() {
-      // TODO - you fill in here.
-      return 0;
+      if(empty()) {
+        throw new RuntimeException("Empty stack!!");
+      }
+      return stack.pop()[1];
     }
+    //T O(1)
     public void push(Integer x) {
-      // TODO - you fill in here.
-      return;
+      if(empty()) {
+        stack.push(new int[]{x, x});
+      } else {
+        stack.push(new int[]{Math.max(stack.peek()[0], x), x});
+      }
     }
   }
   @EpiUserType(ctorParams = {String.class, int.class})
