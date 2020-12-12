@@ -20,24 +20,71 @@ public class RomanToInteger {
     }
   };
   @EpiTest(testDataFile = "roman_to_integer.tsv")
-
-  //T O(N) S O(1) + map constant space
+//T O(N) S O(1)
   public static int romanToInteger(String s) {
-    int rt = 0, len = s.length();
+//    assert(isValid(s));
+//    int rt = 0, prev = Integer.MAX_VALUE;
+//
+//    for(char ch : s.toCharArray()) {
+//      int val = map.get(ch);
+//      if(val > prev) {
+//        rt -= prev;
+//        rt += (val - prev);
+//      } else {
+//        rt += val;
+//      }
+//      prev = val;
+//    }
+//
+//    return rt;
+    return epi.kt.RomanToInteger.INSTANCE.romanToInteger(s);
+  }
 
-    for(int i = 0; i < len; i++) {
-      char ch = s.charAt(i);
-      if(i < len - 1 && map.get(ch) < map.get(s.charAt(i + 1))) {
-        rt -= map.get(ch);
-      } else {
-        rt += map.get(ch);
+  private static boolean isValid(String s) {
+    /*
+      0. Check if there contains any illegal char
+      1. Check if correct preceding char
+      2. Check if back to back exception exist
+     */
+    boolean hasPre = false;
+    int prev = Integer.MAX_VALUE;
+    for(char ch : s.toCharArray()) {
+      Integer val = map.get(ch);
+      //Check if there contains any illegal char
+      if(val == null) {
+        return false;
       }
+
+      if(val > prev) {
+        if(hasPre) {
+          //Back to back
+          return false;
+        }
+        //Check if correct preceding char
+        if(((ch == 'V' || ch == 'X') && prev != 1)
+        ||  ((ch == 'L' || ch == 'C') && prev != 10)
+        ||  ((ch == 'D' || ch == 'M') && prev != 100)) {
+          return false;
+        }
+
+        hasPre = true;
+      } else {
+        hasPre = false;
+      }
+      prev = val;
     }
 
-    return rt;
+    return true;
   }
 
   public static void main(String[] args) {
+    //Back to back
+    assert (!isValid("IXC"));
+    assert (!isValid("CDM"));
+    //Illegal char
+    assert (!isValid("ACD"));
+    //Wrong preceding char
+    assert (!isValid("IDM"));
     System.exit(
         GenericTest
             .runFromAnnotations(args, "RomanToInteger.java",
