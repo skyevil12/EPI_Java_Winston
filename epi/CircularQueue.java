@@ -4,27 +4,88 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 public class CircularQueue {
 
   public static class Queue {
-    public Queue(int capacity) {}
+    private static int SCALE_FACTOR = 2;
+    int[] nums;
+    int head, tail, cnt;
+
+    public Queue(int capacity) {
+      nums = new int[capacity];
+    }
+
+    private void rotate(int[] rt, int dis) {
+      if(dis == 0) {
+        return;
+      }
+      int len = rt.length;
+      dis += len;
+      dis %= len;
+
+      //dis here is the dis that cnt of tail elements
+      reverse(rt, 0, len - dis - 1);
+      reverse(rt, len - 1 - dis + 1, len - 1);
+      reverse(rt, 0, len - 1);
+    }
+
+    private void reverse(int[] rt, int st, int ed) {
+      while(st < ed) {
+        int tmp = rt[st];
+        rt[st] = rt[ed];
+        rt[ed] = tmp;
+        st++;
+        ed--;
+      }
+    }
+
+    //Amortized T O(1)
     public void enqueue(Integer x) {
-      // TODO - you fill in here.
+      if(cnt == nums.length) {
+        rotate(nums, -head);
+        //Note that we must use Integer obj when using Arrays.asList
+//        Collections.rotate(Arrays.asList(nums), -head);
+        head = 0;
+        tail = cnt;
+//        int[] tmp = new int[cnt * SCALE_FACTOR];
+//        for(int i = 0; i < nums.length; i++) {
+//          tmp[i] = nums[i];
+//        }
+        nums = Arrays.copyOf(nums, cnt * SCALE_FACTOR);//tmp;//
+      }
+
+      nums[tail++] = x;
+      tail %= nums.length;
+      cnt++;
       return;
     }
+    //T O(1)
     public Integer dequeue() {
-      // TODO - you fill in here.
-      return 0;
+      if(cnt == 0) {
+        throw new RuntimeException("Empty queue!!");
+      }
+
+      int rt = nums[head++];
+      head %= nums.length;
+      cnt--;
+      return rt;
     }
     public int size() {
-      // TODO - you fill in here.
-      return 0;
+      return cnt;
     }
     @Override
     public String toString() {
-      // TODO - you fill in here.
-      return super.toString();
+      StringBuilder sb = new StringBuilder();
+      for(int i = 0; i < nums.length; i++) {
+        sb.append(nums[i]);
+        if(i != nums.length - 1) {
+          sb.append(',');
+        }
+      }
+      return sb.toString();
     }
   }
   @EpiUserType(ctorParams = {String.class, int.class})

@@ -4,18 +4,27 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;
 public class QueueFromStacks {
 
   public static class Queue {
+    Deque<Integer> dqStack = new ArrayDeque<>(), eqStack = new ArrayDeque<>();;
+    //T O(1) S O(m)
     public void enqueue(Integer x) {
-      // TODO - you fill in here.
+      eqStack.push(x);
       return;
     }
+    //T O(m), m is the operation count
     public Integer dequeue() {
-      // TODO - you fill in here.
-      return 0;
+      if(dqStack.isEmpty()) {
+        while (!eqStack.isEmpty()) {
+          dqStack.push(eqStack.pop());
+        }
+      }
+      return dqStack.pop();
     }
   }
   @EpiUserType(ctorParams = {String.class, int.class})

@@ -4,21 +4,30 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class QueueWithMax {
+  Queue<Integer> queue = new ArrayDeque<>();
+  TreeMap<Integer, Integer> valCnt = new TreeMap<>();
   public void enqueue(Integer x) {
-    // TODO - you fill in here.
+    queue.offer(x);
+    //T O(logM), S O(M) M is op count
+    valCnt.put(x, valCnt.getOrDefault(x, 0) + 1);
     return;
   }
   public Integer dequeue() {
-    // TODO - you fill in here.
-    return 0;
+    int rt = queue.poll();
+    int cnt = valCnt.get(rt);
+    if(cnt == 1) {
+      //T O(logM), S O(M) M is op count
+      valCnt.remove(rt);
+    } else {
+      valCnt.put(rt, cnt - 1);
+    }
+    return rt;
   }
   public Integer max() {
-    // TODO - you fill in here.
-    return 0;
+    return valCnt.descendingKeySet().iterator().next();
   }
   @EpiUserType(ctorParams = {String.class, int.class})
   public static class QueueOp {
