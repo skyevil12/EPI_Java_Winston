@@ -5,7 +5,7 @@ import java.lang.StringBuilder
 object StringIntegerInterconversion {
     fun stringToInteger(s: String): Int {
         var rt = 0L
-        if(s.isEmpty) {
+        if(s.isEmpty()) {
             return 0
         }
 
