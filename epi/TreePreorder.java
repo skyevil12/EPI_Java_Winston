@@ -2,6 +2,9 @@ package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 public class TreePreorder {
 
@@ -17,8 +20,26 @@ public class TreePreorder {
 
   @EpiTest(testDataFile = "tree_preorder.tsv")
   public static List<Integer> preorderTraversal(BinaryTreeNode<Integer> tree) {
-    // TODO - you fill in here.
-    return null;
+    /*
+      T O(N) S O(h) h is logN - N
+     */
+    List<Integer> rtList = new ArrayList<>();
+
+    Deque<BinaryTreeNode<Integer>> stack = new ArrayDeque<>();
+    BinaryTreeNode<Integer> root = tree;
+
+    while(!stack.isEmpty() || root != null) {
+      while(root != null) {
+        rtList.add(root.data);
+        stack.push(root);
+        root = root.left;
+      }
+
+      BinaryTreeNode tmp = stack.pop();
+      root = tmp.right;
+    }
+
+    return rtList;
   }
 
   public static void main(String[] args) {
