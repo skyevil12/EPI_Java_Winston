@@ -7,35 +7,54 @@ public class IsListCyclic {
   /*
     Edge case is null or single point
     T O(N) s O(1)
+
+
+    -1 -> 0 -> 1 -> 2 -> 3
+               |         |
+                    <-
+    s -1  0 1 2(n - 1) 4
+    f -1  1 3 2(n + 2) 7
+
+    f - s == circle
+
+    s 3   2 3 2
+    h -1  0 1 2
+
+    s 1   2 3 2
+    h -1  0 1 2
    */
   public static ListNode<Integer> hasCycle(ListNode<Integer> head) {
-    if(head == null) {
-      return null;
-    }
-
-    //No cycle return null, or return the start of the cycle
-    ListNode<Integer> slow = head, fast = head, conflict = null;
-    while(fast != null && fast.next != null) {
-      slow = slow.next;
-      fast = fast.next.next;
-      if(slow == fast) {
-        conflict = slow;
-        break;
-      }
-    }
-
-    if(conflict == null) {
-      return null;
-    }
-
-    while(true) {
-      if(head == conflict) {
-        return head;
-      }
-
-      head = head.next;
-      conflict = conflict.next;
-    }
+//    ListNode<Integer> slow = head, fast = head;
+//
+//    while(fast != null && fast.next != null) {
+//      slow = slow.next;
+//      fast = fast.next.next;
+//
+//      //Check has circle
+//      if(slow == fast) {
+//        //Find len
+//        int len = 0;
+//        do {
+//          fast = fast.next;
+//          len++;
+//        } while(fast != slow);
+//
+//        ListNode<Integer> aHead = head;
+//        while(len-- > 0) {
+//          aHead = aHead.next;
+//        }
+//
+//        while(head != aHead) {
+//          head = head.next;
+//          aHead = aHead.next;
+//        }
+//
+//        return head;
+//      }
+//    }
+//
+//    return null;
+    return epi.kt.IsListCyclic.INSTANCE.hasCycle(head);
   }
   @EpiTest(testDataFile = "is_list_cyclic.tsv")
   public static void HasCycleWrapper(TimedExecutor executor,
