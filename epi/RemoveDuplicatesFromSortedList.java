@@ -12,7 +12,7 @@ public class RemoveDuplicatesFromSortedList {
 
       Suppose L is len N then T O(N) S O(1)
      */
-    ListNode cur = L;
+    /*ListNode cur = L;
 
     while(cur != null) {
       ListNode next = cur.next;
@@ -22,7 +22,24 @@ public class RemoveDuplicatesFromSortedList {
       cur.next = next;
       cur = cur.next;
     }
+    return L;*/
+    /*
+      2 -> 2 -> 2 -> 2
+      T O(N) S O(1)
+     */
+    /*
+    ListNode<Integer> cur = L;
+    while(cur != null) {
+      ListNode<Integer> next = cur.next;
+      while (next != null && cur.data == next.data) {
+        next = next.next;
+      }
+      cur.next = next;
+      cur = cur.next;
+    }
     return L;
+     */
+    return epi.kt.RemoveDuplicatesFromSortedList.INSTANCE.removeDuplicates(L);
   }
 
   public static void main(String[] args) {

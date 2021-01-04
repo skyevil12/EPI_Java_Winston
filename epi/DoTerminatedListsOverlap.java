@@ -6,6 +6,7 @@ import epi.test_framework.TimedExecutor;
 public class DoTerminatedListsOverlap {
   /*
     Edge case: null return null, len 1, cycle(but input has no circle in this case)
+    T O(L0 + L1 + min(L0, L1)) S O(1)
    */
   public static ListNode<Integer>
   overlappingNoCycleLists(ListNode<Integer> l0, ListNode<Integer> l1) {
@@ -13,39 +14,34 @@ public class DoTerminatedListsOverlap {
       return null;
     }
 
-    int len0 = 0, len1= 0;
-
-    ListNode<Integer> tL0 = l0, tL1 = l1;
-
-    while(tL0 != null) {
+    int len0 = 1, len1 = 1;
+    ListNode<Integer> c0 = l0, c1 = l1;
+    while(c0 != null) {
+      c0 = c0.next;
       len0++;
-      tL0 = tL0.next;
     }
 
-    while(tL1 != null) {
+    while(c1 != null) {
+      c1 = c1.next;
       len1++;
-      tL1 = tL1.next;
     }
 
-    tL0 = l0;
-    while(len0 - len1 > 0) {
+    while(len0 > len1) {
+      l0 = l0.next;
       len0--;
-      tL0 = tL0.next;
     }
 
-    tL1 = l1;
-    while(len1 - len0 > 0) {
+    while(len0 < len1) {
+      l1 = l1.next;
       len1--;
-      tL1 = tL1.next;
     }
 
-    while(tL0 != null) {
-      if(tL0 == tL1) {
-        return tL0;
+    while(l0 != null) {
+      if(l0 == l1) {
+        return l0;
       }
-
-      tL0 = tL0.next;
-      tL1 = tL1.next;
+      l0 = l0.next;
+      l1 = l1.next;
     }
 
     return null;

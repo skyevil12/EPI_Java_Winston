@@ -6,7 +6,7 @@ object IsListCyclic {
     /*
         https://leetcode.com/problems/linked-list-cycle-ii/solution/
      */
-    fun hasCycle(head: ListNode<Integer>): ListNode<Integer>? {
+    fun hasCycle(head: ListNode<Integer>?): ListNode<Integer>? {
         var slow: ListNode<Integer>? = head
         var fast: ListNode<Integer>? = head
 
@@ -18,7 +18,7 @@ object IsListCyclic {
                 var inter = slow
                 var nHead = head
                 while(nHead != inter) {
-                    nHead = nHead.next
+                    nHead = nHead?.next
                     inter = inter!!.next
                 }
 

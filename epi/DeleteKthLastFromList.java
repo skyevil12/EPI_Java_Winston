@@ -15,26 +15,52 @@ public class DeleteKthLastFromList {
 
       T O(N) S O(1)
      */
-    //Slow is the k + 1 node, fast is the tail node
-    ListNode dummy = new ListNode(-1, L), slow = dummy, fast = dummy.next;
     /*
       [2, 1], 2
       slow  -1
       fast  null
       k     0
      */
+    /*
+    //Slow is the k + 1 node, fast is the tail node
+    ListNode dummy = new ListNode(-1, L), prev = dummy, tailNext = dummy.next;
+    //Suppose L is kth node, so update tailNext here
     while(k > 0) {
-      fast = fast.next;
+      tailNext = tailNext.next;
       k--;
     }
 
-    while(fast != null) {
-      slow = slow.next;
-      fast = fast.next;
+    while(tailNext != null) {
+      prev = prev.next;
+      tailNext = tailNext.next;
     }
 
-    slow.next = slow.next.next;
+    prev.next = prev.next.next;
     return dummy.next;
+     */
+
+    /*
+    //Sentinel node
+    ListNode dummy = new ListNode(-1, L), kPrev = dummy, tail = dummy;
+
+    while(k > 0) {
+      tail = tail.next;
+      k--;
+    }
+
+    //Traverse to put tail
+    while(tail != null && tail.next != null) {
+      tail = tail.next;
+      kPrev = kPrev.next;
+    }
+
+    //Remove node
+    kPrev.next = kPrev.next.next;
+
+    return dummy.next;
+     */
+
+    return epi.kt.DeleteKthLastFromList.INSTANCE.removeKthLast(L, k);
   }
 
   public static void main(String[] args) {
