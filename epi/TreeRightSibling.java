@@ -3,8 +3,11 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+
 public class TreeRightSibling {
   public static class BinaryTreeNode<T> extends TreeLike<T, BinaryTreeNode<T>> {
     public T data;
@@ -30,8 +33,46 @@ public class TreeRightSibling {
   }
 
   public static void constructRightSibling(BinaryTreeNode<Integer> tree) {
-    // TODO - you fill in here.
-    return;
+    //Level order BFS, T O(N) S O(2^h)
+//    if(tree == null) {
+//      return;
+//    }
+//    Queue<BinaryTreeNode<Integer>> queue = new ArrayDeque<>();
+//    queue.offer(tree);
+//
+//    while(!queue.isEmpty()) {
+//      int size = queue.size();
+//      for(int i = 0; i < size; i++) {
+//        BinaryTreeNode<Integer> cur = queue.poll();
+//        if(i != size - 1) {
+//          cur.next = queue.peek();
+//        }
+//
+//        if(cur.left != null) {
+//          queue.offer(cur.left);
+//        }
+//
+//        if(cur.right != null) {
+//          queue.offer(cur.right);
+//        }
+//      }
+//    }
+//
+//    return;
+    //DFS, T O(N) S O(h)
+    if(tree == null) {
+      return;
+    }
+
+    if(tree.left != null) {
+      tree.left.next = tree.right;
+    }
+
+    if(tree.right != null && tree.next != null) {
+      tree.right.next = tree.next.left;
+    }
+    constructRightSibling(tree.left);
+    constructRightSibling(tree.right);
   }
   private static BinaryTreeNode<Integer>
   cloneTree(BinaryTree<Integer> original) {
