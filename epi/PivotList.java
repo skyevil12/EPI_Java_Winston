@@ -10,30 +10,53 @@ import java.util.List;
 public class PivotList {
 
   public static ListNode<Integer> listPivoting(ListNode<Integer> l, int x) {
-    ListNode<Integer> smallerHead = new ListNode(-1, null), smallerIter = smallerHead;
-    ListNode<Integer> equalHead = new ListNode(-1, null), equalIter = equalHead;
-    ListNode<Integer> largeHead = new ListNode(-1, null), largeIter = largeHead;
-    ListNode<Integer> iter = l;
-
-    while(iter != null) {
-      if(iter.data < x) {
-        smallerIter.next = iter;
-        smallerIter = iter;
-      } else if(iter.data == x) {
-        equalIter.next = iter;
-        equalIter = iter;
-      } else if(iter.data > x) {
-        largeIter.next = iter;
-        largeIter = iter;
-      }
-      iter = iter.next;
-    }
-
-    largeIter.next = null;
-    equalIter.next = largeHead.next;
-    smallerIter.next = equalHead.next;
-
-    return smallerHead.next;
+//    ListNode<Integer> smallerHead = new ListNode(-1, null), smallerIter = smallerHead;
+//    ListNode<Integer> equalHead = new ListNode(-1, null), equalIter = equalHead;
+//    ListNode<Integer> largeHead = new ListNode(-1, null), largeIter = largeHead;
+//    ListNode<Integer> iter = l;
+//
+//    while(iter != null) {
+//      if(iter.data < x) {
+//        smallerIter.next = iter;
+//        smallerIter = iter;
+//      } else if(iter.data == x) {
+//        equalIter.next = iter;
+//        equalIter = iter;
+//      } else if(iter.data > x) {
+//        largeIter.next = iter;
+//        largeIter = iter;
+//      }
+//      iter = iter.next;
+//    }
+//
+//    largeIter.next = null;
+//    equalIter.next = largeHead.next;
+//    smallerIter.next = equalHead.next;
+//
+//    return smallerHead.next;
+    //T O(N) S O(1)
+//    ListNode<Integer> sL = new ListNode<>(0, null), eL = new ListNode<>(0, null), lL = new ListNode<>(0, null), cur = l;
+//    ListNode<Integer> dS = sL, dE = eL, dL = lL;
+//
+//    while(cur != null) {
+//      if(cur.data < x) {
+//        sL.next = cur;
+//        sL = sL.next;
+//      } else if(cur.data == x) {
+//        eL.next = cur;
+//        eL = eL.next;
+//      } else if(cur.data > x) {
+//        lL.next = cur;
+//        lL = lL.next;
+//      }
+//      cur = cur.next;
+//    }
+//
+//    lL.next = null;
+//    eL.next = dL.next;
+//    sL.next = dE.next;
+//    return dS.next;
+    return epi.kt.PivotList.INSTANCE.listPivoting(l, x);
   }
   public static List<Integer> linkedToList(ListNode<Integer> l) {
     List<Integer> v = new ArrayList<>();

@@ -14,32 +14,33 @@ public class IsListPalindromic {
 
       T O(N) S O(1)
      */
-    if(L == null) {
-      return true;
-    }
-
-    ListNode slow = L, fast = L;
     /*
      1, 2, 3
      1, 2, 3, 4
      1, 2, 3, 4, 5
      */
-    while(fast != null && fast.next != null) {
-      slow = slow.next;
-      fast = fast.next.next;
-    }
-
-    ListNode<Integer> first = L, second = reverse(slow);
-    while(first != null && second != null) {
-      if(first.data.intValue() != second.data.intValue()) {
-        return false;
-      }
-
-      first = first.next;
-      second = second.next;
-    }
-
-    return true;
+//    if(L == null) {
+//      return true;
+//    }
+//
+//    ListNode slow = L, fast = L;
+//    while(fast != null && fast.next != null) {
+//      slow = slow.next;
+//      fast = fast.next.next;
+//    }
+//
+//    ListNode<Integer> first = L, second = reverse(slow);
+//    while(first != null && second != null) {
+//      if(first.data.intValue() != second.data.intValue()) {
+//        return false;
+//      }
+//
+//      first = first.next;
+//      second = second.next;
+//    }
+//
+//    return true;
+    return epi.kt.IsListPalindromic.INSTANCE.isLinkedListAPalindrome(L);
   }
 
   private static ListNode reverse(ListNode node) {
