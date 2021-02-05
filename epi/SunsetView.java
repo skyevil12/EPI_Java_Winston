@@ -8,21 +8,22 @@ public class SunsetView {
   public static List<Integer>
   examineBuildingsWithSunset(Iterator<Integer> sequence) {
     //T O(N) worst case still S O(N) but in best case would be S O(1)
-    Deque<int[]> stack = new ArrayDeque<>();
+    //Min stack
+    Deque<int[]> dq = new ArrayDeque<>();
     int i = 0;
     while(sequence.hasNext()) {
       int cur = sequence.next();
-      while(!stack.isEmpty() && stack.peek()[1] <= cur) {
-        stack.pop();
+
+      while(!dq.isEmpty() && cur >= dq.peekFirst()[1]) {
+        dq.pollFirst();
       }
 
-      stack.push(new int[]{i, cur});
-      i++;
+      dq.offerFirst(new int[]{i++, cur});
     }
 
     List<Integer> rtList = new ArrayList<>();
-    while(!stack.isEmpty()) {
-      rtList.add(stack.pop()[0]);
+    while(!dq.isEmpty()) {
+      rtList.add(dq.pollFirst()[0]);
     }
     return rtList;
   }

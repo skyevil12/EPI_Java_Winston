@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IsValidParenthesization {
-  static Map<Character, Character> sMap = new HashMap<>(){
-    {
-      this.put('(', ')');
-      this.put('[', ']');
-      this.put('{', '}');
-    }
-  };
+//  static Map<Character, Character> sMap = new HashMap<>(){
+//    {
+//      this.put('(', ')');
+//      this.put('[', ']');
+//      this.put('{', '}');
+//    }
+//  };
   @EpiTest(testDataFile = "is_valid_parenthesization.tsv")
   public static boolean isWellFormed(String s) {
     /*
@@ -22,19 +22,20 @@ public class IsValidParenthesization {
     stack {(
       T O(N) S O(N)
      */
-    Deque<Character> stack = new ArrayDeque();
-    for(char ch : s.toCharArray()) {
-      if(sMap.containsKey(ch)) {
-        stack.push(ch);
-      } else {
-        if(!stack.isEmpty() && sMap.get(stack.pop()) == ch) {
-
-        } else {
-          return false;
-        }
-      }
-    }
-    return stack.isEmpty();
+//    Deque<Character> stack = new ArrayDeque();
+//    for(char ch : s.toCharArray()) {
+//      if(sMap.containsKey(ch)) {
+//        stack.push(ch);
+//      } else {
+//        if(!stack.isEmpty() && sMap.get(stack.pop()) == ch) {
+//
+//        } else {
+//          return false;
+//        }
+//      }
+//    }
+//    return stack.isEmpty();
+    return epi.kt.IsValidParenthesization.INSTANCE.isWellFormed(s);
   }
 
   public static void main(String[] args) {

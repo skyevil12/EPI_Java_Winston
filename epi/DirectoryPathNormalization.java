@@ -2,65 +2,42 @@ package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.Queue;
+import java.util.*;
 
 public class DirectoryPathNormalization {
-  private static String forward_slash_str = "/";
-  private static String cur_dir_str = ".";
-  private static String parent_dir_str = "..";
+  private static final String DOC_SEPARATOR = "/";
+  private static final String DOC_PARENT = "..";
+  private static final String DOC_CUR = ".";
   @EpiTest(testDataFile = "directory_path_normalization.tsv")
 
   public static String shortestEquivalentPath(String path) {
-    /*
-      Edge
-      Start from FW slash
-      ".." before ".."
-      Empty before ".."
-
-      T O(N) S O(N)
-     */
-    if(path == null || path.isEmpty()) {
-      return path;
+    StringBuilder rtSb = new StringBuilder();
+    if(path.startsWith(DOC_SEPARATOR)) {
+      rtSb.append(DOC_SEPARATOR);
     }
 
-    Deque<String> deque = new ArrayDeque<>();
-    if(path.charAt(0) == forward_slash_str.charAt(0)) {
-      deque.offer(forward_slash_str);
-    }
-
-    String[] dirs = path.split(forward_slash_str);
+    Deque<String> dq = new ArrayDeque<>();
+    String[] dirs = path.split(DOC_SEPARATOR);
     for(String dir : dirs) {
-      if(dir.isEmpty() || dir.equals(cur_dir_str)) {
+      if(dir.isEmpty() || dir.equals(DOC_CUR)) {
         continue;
       }
 
-      if(dir.equals(parent_dir_str)) {
-        if(!deque.isEmpty() && deque.peekLast().equals(forward_slash_str)) {
-          throw new RuntimeException("Cannot go upper!");
-        }
-
-        if(deque.isEmpty() || (!deque.isEmpty() && deque.peekLast().equals(parent_dir_str))) {
-          deque.offer(dir);
+      if(dir.equals(DOC_PARENT)) {
+        if(dq.isEmpty() || dq.peekFirst().equals(DOC_PARENT)) {
+          dq.offerFirst(dir);
         } else {
-          deque.pollLast();
+          dq.pollFirst();
         }
       } else {
-        deque.offer(dir);
+        dq.offerFirst(dir);
       }
     }
 
-    StringBuilder rtSb = new StringBuilder();
-    if(!deque.isEmpty() && deque.peek().equals(forward_slash_str)) {
-      rtSb.append(deque.poll());
-    }
-
-    while(!deque.isEmpty()) {
-      rtSb.append(deque.poll());
-      if(!deque.isEmpty()) {
-        rtSb.append(forward_slash_str);
+    while(!dq.isEmpty()) {
+      rtSb.append(dq.pollLast());
+      if(!dq.isEmpty()) {
+        rtSb.append(DOC_SEPARATOR);
       }
     }
 
