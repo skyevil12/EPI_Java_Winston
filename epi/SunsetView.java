@@ -9,23 +9,24 @@ public class SunsetView {
   examineBuildingsWithSunset(Iterator<Integer> sequence) {
     //T O(N) worst case still S O(N) but in best case would be S O(1)
     //Min stack
-    Deque<int[]> dq = new ArrayDeque<>();
-    int i = 0;
-    while(sequence.hasNext()) {
-      int cur = sequence.next();
-
-      while(!dq.isEmpty() && cur >= dq.peekFirst()[1]) {
-        dq.pollFirst();
-      }
-
-      dq.offerFirst(new int[]{i++, cur});
-    }
-
-    List<Integer> rtList = new ArrayList<>();
-    while(!dq.isEmpty()) {
-      rtList.add(dq.pollFirst()[0]);
-    }
-    return rtList;
+//    Deque<int[]> dq = new ArrayDeque<>();
+//    int i = 0;
+//    while(sequence.hasNext()) {
+//      int cur = sequence.next();
+//
+//      while(!dq.isEmpty() && cur >= dq.peekFirst()[1]) {
+//        dq.pollFirst();
+//      }
+//
+//      dq.offerFirst(new int[]{i++, cur});
+//    }
+//
+//    List<Integer> rtList = new ArrayList<>();
+//    while(!dq.isEmpty()) {
+//      rtList.add(dq.pollFirst()[0]);
+//    }
+//    return rtList;
+    return epi.kt.SunsetView.INSTANCE.examineBuildingsWithSunset(sequence);
   }
   @EpiTest(testDataFile = "sunset_view.tsv")
   public static List<Integer>
