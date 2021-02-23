@@ -10,22 +10,22 @@ import java.util.List;
 import java.util.NoSuchElementException;
 public class QueueFromStacks {
 
-  public static class Queue {
-    Deque<Integer> dqStack = new ArrayDeque<>(), eqStack = new ArrayDeque<>();;
-    //T O(1) S O(m)
-    public void enqueue(Integer x) {
-      eqStack.push(x);
-      return;
-    }
-    //T O(m), m is the operation count
-    public Integer dequeue() {
-      if(dqStack.isEmpty()) {
-        while (!eqStack.isEmpty()) {
-          dqStack.push(eqStack.pop());
-        }
-      }
-      return dqStack.pop();
-    }
+  public static class Queue extends epi.kt.QueueFromStacksEnqueue {
+//    Deque<Integer> dqStack = new ArrayDeque<>(), eqStack = new ArrayDeque<>();;
+//    //T O(1) S O(m)
+//    public void enqueue(Integer x) {
+//      eqStack.push(x);
+//      return;
+//    }
+//    //T O(m), m is the operation count
+//    public Integer dequeue() {
+//      if(dqStack.isEmpty()) {
+//        while (!eqStack.isEmpty()) {
+//          dqStack.push(eqStack.pop());
+//        }
+//      }
+//      return dqStack.pop();
+//    }
   }
   @EpiUserType(ctorParams = {String.class, int.class})
   public static class QueueOp {

@@ -1,5 +1,6 @@
 package epi;
 
+import epi.kt.QueueWithMaxStack;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
@@ -7,7 +8,7 @@ import epi.test_framework.TestFailure;
 
 import java.util.*;
 
-public class QueueWithMax {
+public class QueueWithMax extends QueueWithMaxStack {
     /*
     T O(N) S O(N)
     Remove dummy front element that is smaller than cur
@@ -40,32 +41,32 @@ public class QueueWithMax {
     /*Two maxStack solution make queue solution
         T O(1), amortize in dequeue S O(1)
      */
-    StackWithMax.Stack enStack = new StackWithMax.Stack();
-    StackWithMax.Stack dqStack = new StackWithMax.Stack();
-    public void enqueue(Integer x) {
-      //enqueue stack work normally
-      enStack.push(x);
-    }
-
-    public Integer dequeue() {
-      //only fill dq stack when it is empty
-      if(dqStack.empty()) {
-        while(!enStack.empty()) {
-          dqStack.push(enStack.pop());
-        }
-      }
-      return dqStack.pop();
-    }
-
-    public Integer max() {
-        if(!enStack.empty()) {
-            return dqStack.empty() ? enStack.max() : Math.max(enStack.max(), dqStack.max());
-        } else if(!dqStack.empty()){
-            return dqStack.max();
-        }
-
-        throw new RuntimeException("empty!!");
-    }
+//    StackWithMax.Stack enStack = new StackWithMax.Stack();
+//    StackWithMax.Stack dqStack = new StackWithMax.Stack();
+//    public void enqueue(Integer x) {
+//      //enqueue stack work normally
+//      enStack.push(x);
+//    }
+//
+//    public Integer dequeue() {
+//      //only fill dq stack when it is empty
+//      if(dqStack.empty()) {
+//        while(!enStack.empty()) {
+//          dqStack.push(enStack.pop());
+//        }
+//      }
+//      return dqStack.pop();
+//    }
+//
+//    public Integer max() {
+//        if(!enStack.empty()) {
+//            return dqStack.empty() ? enStack.max() : Math.max(enStack.max(), dqStack.max());
+//        } else if(!dqStack.empty()){
+//            return dqStack.max();
+//        }
+//
+//        throw new RuntimeException("empty!!");
+//    }
 
     @EpiUserType(ctorParams = {String.class, int.class})
     public static class QueueOp {
