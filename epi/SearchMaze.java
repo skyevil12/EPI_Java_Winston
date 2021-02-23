@@ -3,10 +3,10 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
+import kotlin.Pair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 public class SearchMaze {
   @EpiUserType(ctorParams = {int.class, int.class})
 
@@ -40,9 +40,42 @@ public class SearchMaze {
 
   public static List<Coordinate> searchMaze(List<List<Color>> maze,
                                             Coordinate s, Coordinate e) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    List<Coordinate> rtList = new ArrayList<>();
+    dfs(maze, s, e, rtList, new HashSet<>());
+    return rtList;
   }
+  //T O(M + N) S O(M + N)?
+  private static boolean dfs(List<List<Color>> maze, Coordinate s, Coordinate e, List<Coordinate> rtList, Set<Pair<Integer, Integer>> visited) {
+    int m = maze.size(), n = maze.get(0).size();
+    if(s.x < 0 || s.x >= m || s.y < 0 || s.y >= n || maze.get(s.x).get(s.y) == Color.BLACK || !visited.add(new Pair(s.x, s.y))) {
+      return false;
+    }
+
+    rtList.add(s);
+    if(s.equals(e)) {
+      return true;
+    }
+
+    boolean rt = dfs(maze, new Coordinate(s.x + 1, s.y), e, rtList, visited);
+    if(rt) {
+      return true;
+    }
+    rt = dfs(maze, new Coordinate(s.x - 1, s.y), e, rtList, visited);
+    if(rt) {
+      return true;
+    }
+    rt = dfs(maze, new Coordinate(s.x, s.y + 1), e, rtList, visited);
+    if(rt) {
+      return true;
+    }
+    rt = dfs(maze, new Coordinate(s.x, s.y - 1), e, rtList, visited);
+    if(rt) {
+      return true;
+    }
+    rtList.remove(rtList.size() - 1);
+    return false;
+  }
+
   public static boolean pathElementIsFeasible(List<List<Integer>> maze,
                                               Coordinate prev, Coordinate cur) {
     if (!(0 <= cur.x && cur.x < maze.size() && 0 <= cur.y &&
