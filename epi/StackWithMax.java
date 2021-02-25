@@ -1,4 +1,5 @@
 package epi;
+import epi.kt.StackWithMaxHeap;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
@@ -8,35 +9,62 @@ import java.util.*;
 
 public class StackWithMax {
 
-  public static class Stack {
-    //{max, cur}
-    Deque<int[]> stack = new ArrayDeque<>();
-    //T O(1)
+  public static class Stack extends StackWithMaxHeap {
+    /*11-7
+      private Queue<int[]> maxHeap = new PriorityQueue<>(new Comparator<int[]>() {
+      @Override
+      public int compare(int[] o1, int[] o2) {
+        return o2[0] - o1[0];
+      }
+    });
+    private Queue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+    private int idx;
     public boolean empty() {
-      return stack.isEmpty();
+      return maxHeap.isEmpty();
     }
-    //T O(1)
     public Integer max() {
-      if(empty()) {
-        throw new RuntimeException("Empty stack!!");
+      Iterator<int[]> it = maxHeap.iterator();
+      pq.clear();
+      while(it.hasNext()) {
+        pq.offer(it.next()[1]);
       }
-      return stack.peek()[0];
+      return pq.peek();
     }
-    //T O(1)
     public Integer pop() {
-      if(empty()) {
-        throw new RuntimeException("Empty stack!!");
-      }
-      return stack.pop()[1];
+      return maxHeap.poll()[1];
     }
-    //T O(1)
     public void push(Integer x) {
-      if(empty()) {
-        stack.push(new int[]{x, x});
-      } else {
-        stack.push(new int[]{Math.max(stack.peek()[0], x), x});
-      }
+      maxHeap.offer(new int[]{idx++, x});
     }
+     */
+//    //{max, cur}
+//    Deque<int[]> stack = new ArrayDeque<>();
+//    //T O(1)
+//    public boolean empty() {
+//      return stack.isEmpty();
+//    }
+//    //T O(1)
+//    public Integer max() {
+//      if(empty()) {
+//        throw new RuntimeException("Empty stack!!");
+//      }
+//      return stack.peek()[0];
+//    }
+//    //T O(1)
+//    public Integer pop() {
+//      if(empty()) {
+//        throw new RuntimeException("Empty stack!!");
+//      }
+//      return stack.pop()[1];
+//    }
+//    //T O(1)
+//    public void push(Integer x) {
+//      if(empty()) {
+//        stack.push(new int[]{x, x});
+//      } else {
+//        stack.push(new int[]{Math.max(stack.peek()[0], x), x});
+//      }
+//    }
   }
   @EpiUserType(ctorParams = {String.class, int.class})
   public static class StackOp {
