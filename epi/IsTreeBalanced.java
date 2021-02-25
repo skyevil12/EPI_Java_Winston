@@ -48,7 +48,8 @@ public class IsTreeBalanced {
     T O(N) S O(h) h is O logN if complete binary tree or N is skewed binary tree
    */
   public static boolean isBalanced(BinaryTreeNode<Integer> tree) {
-    return checkBalanced(tree).isBalanced;
+//    return checkBalanced(tree).isBalanced;
+      return epi.kt.IsTreeBalanced.INSTANCE.isBalanced(tree);
   }
 
   private static TreeStatus checkBalanced(BinaryTreeNode<Integer> node) {
