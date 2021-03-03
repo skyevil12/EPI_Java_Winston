@@ -5,17 +5,18 @@ public class IsTreeSymmetric {
   @EpiTest(testDataFile = "is_tree_symmetric.tsv")
 
   public static boolean isSymmetric(BinaryTreeNode<Integer> tree) {
-    /*
-    left.left == right.right
-    left.right == right.left
-    Suppose empty input is symmetric
-    T O(N) S O(h) h is logN ~ N
-     */
-    if(tree == null) {
-      return true;
-    }
-
-    return isSubTreeSym(tree.left, tree.right);
+//    /*
+//    left.left == right.right
+//    left.right == right.left
+//    Suppose empty input is symmetric
+//    T O(N) S O(h) h is logN ~ N
+//     */
+//    if(tree == null) {
+//      return true;
+//    }
+//
+//    return isSubTreeSym(tree.left, tree.right);
+    return epi.kt.IsTreeSymmetric.INSTANCE.isSymmetric(tree);
   }
 
   private static boolean isSubTreeSym(BinaryTreeNode<Integer> l, BinaryTreeNode<Integer> r) {
