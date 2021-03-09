@@ -7,8 +7,14 @@ import java.util.List;
 public class AbsentValueArray {
 
   public static int findMissingElement(Iterable<Integer> stream) {
-    // TODO - you fill in here.
-    return 0;
+    int len = 1000000000;
+    int max = len - 1;
+    long sum = max * len / 2;
+    long lSum = 0;
+    for(int num : stream) {
+      lSum += num;
+    }
+    return (int)(sum - lSum);
   }
   @EpiTest(testDataFile = "absent_value_array.tsv")
   public static void findMissingElementWrapper(List<Integer> stream)
