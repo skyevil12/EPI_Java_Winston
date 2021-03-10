@@ -3,6 +3,7 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
+import java.util.Collections;
 import java.util.List;
 public class SearchForMissingElement {
   @EpiUserType(ctorParams = {Integer.class, Integer.class})
@@ -49,8 +50,33 @@ public class SearchForMissingElement {
   @EpiTest(testDataFile = "find_missing_and_duplicate.tsv")
 
   public static DuplicateAndMissing findDuplicateMissing(List<Integer> A) {
-    // TODO - you fill in here.
-    return new DuplicateAndMissing(0, 0);
+    int xorRt = 0;
+
+    for(int i = 0; i < A.size(); i++) {
+      xorRt ^= i;
+      xorRt ^= A.get(i);
+    }
+
+    int leastDiff = xorRt & ~(xorRt - 1);
+    int missOrDup = 0;
+
+    for(int i = 0; i < A.size(); i++) {
+      if((i & leastDiff) != 0) {
+        missOrDup ^= i;
+      }
+
+      if((A.get(i) & leastDiff) != 0) {
+        missOrDup ^= A.get(i);
+      }
+    }
+
+    for(int num : A) {
+      if(num == missOrDup) {
+        return new DuplicateAndMissing(num, xorRt ^ num);
+      }
+    }
+
+    return new DuplicateAndMissing(xorRt ^ missOrDup, missOrDup);
   }
 
   public static void main(String[] args) {
