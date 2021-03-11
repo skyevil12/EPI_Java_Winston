@@ -1,4 +1,5 @@
 package epi;
+import epi.kt.LowestCommonAncestorV1;
 import epi.test_framework.BinaryTreeUtils;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
@@ -40,7 +41,8 @@ public class LowestCommonAncestor {
   public static BinaryTreeNode<Integer> lca(BinaryTreeNode<Integer> tree,
                                             BinaryTreeNode<Integer> node0,
                                             BinaryTreeNode<Integer> node1) {
-    return epi.kt.LowestCommonAncestor.INSTANCE.lca(tree, node0, node1);
+    return LowestCommonAncestorV1.INSTANCE.lca(tree, node0, node1);
+//    return epi.kt.LowestCommonAncestor.INSTANCE.lca(tree, node0, node1);
 //    return find(tree, node0, node1).parent;
 //    if (tree == null || tree == node0 || tree == node1) {
 //      return tree;

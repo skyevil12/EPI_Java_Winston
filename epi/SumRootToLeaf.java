@@ -12,9 +12,10 @@ public class SumRootToLeaf {
       perfect tree is all nodes have two children and all leaves are at same level
       preorder
      */
-    int[] rt = {0};
-    core(tree, 0, rt);
-    return rt[0];
+//    int[] rt = {0};
+//    core(tree, 0, rt);
+//    return rt[0];
+    return epi.kt.SumRootToLeaf.INSTANCE.sumRootToLeaf(tree);
   }
 
   private static void core(BinaryTreeNode<Integer> node, int cur, int[] rt) {

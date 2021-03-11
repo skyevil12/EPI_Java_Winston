@@ -1,5 +1,6 @@
 package epi;
 import epi.kt.LowestCommonAncestor;
+import epi.kt.LowestCommonAncestorWithParentV1;
 import epi.test_framework.BinaryTreeUtils;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
@@ -43,7 +44,8 @@ public class LowestCommonAncestorWithParent {
 //    }
 //
 //    return node0;
-    return epi.kt.LowestCommonAncestorWithParent.INSTANCE.lca(node0, node1);
+//    return epi.kt.LowestCommonAncestorWithParent.INSTANCE.lca(node0, node1);
+    return LowestCommonAncestorWithParentV1.INSTANCE.lca(node0, node1);
   }
   @EpiTest(testDataFile = "lowest_common_ancestor.tsv")
   public static int lcaWrapper(TimedExecutor executor, BinaryTree<Integer> tree,
