@@ -4,21 +4,98 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LruCache {
-  LruCache(final int capacity) {}
-  public Integer lookup(Integer key) {
-    // TODO - you fill in here.
-    return 0;
+  /*
+  private Queue<Integer> queue = new ArrayDeque<>();
+  private Map<Integer, Integer> map = new HashMap<>();
+  private int size;
+
+  LruCache(final int capacity) {
+    size = capacity;
   }
+  //Return -1 when not found
+  public Integer lookup(Integer key) {
+    if(!map.containsKey(key)) {
+      return -1;
+    }
+
+    Queue<Integer> nQ = new ArrayDeque<>();
+    while(!queue.isEmpty()) {
+      int cur = queue.poll();
+      if(cur != key) {
+        nQ.offer(cur);
+      }
+    }
+    nQ.offer(key);
+    queue = nQ;
+    return map.get(key);
+  }
+  //Do not do anything if key exists
   public void insert(Integer key, Integer value) {
-    // TODO - you fill in here.
-    return;
+    if(lookup(key) != -1) {
+      return;
+    }
+    queue.offer(key);
+    map.put(key, value);
+    if(queue.size() > size) {
+      erase(queue.poll());
+    }
   }
   public Boolean erase(Object key) {
-    // TODO - you fill in here.
-    return true;
+    if(!(key instanceof Integer)) {
+      return false;
+    }
+
+    if(map.containsKey(key)) {
+      Queue<Integer> nQ = new ArrayDeque<>();
+      while(!queue.isEmpty()) {
+        int cur = queue.poll();
+        if(cur != (Integer)key) {
+          nQ.offer(cur);
+        }
+      }
+
+      queue = nQ;
+      map.remove(key);
+      return true;
+    }
+    return false;
+  }
+   */
+  private Map<Integer, Integer> map;
+  LruCache(final int capacity) {
+    map = new LinkedHashMap(capacity, 1.0f, true) {
+      @Override
+      protected boolean removeEldestEntry(Map.Entry eldest) {
+        return this.size() > capacity;
+      }
+    };
+  }
+  //Must return -1 if not exist
+  public Integer lookup(Integer key) {
+    if(!map.containsKey(key)) {
+      return -1;
+    }
+    return map.get(key);
+  }
+  //Must remove over capacity unit
+  public void insert(Integer key, Integer value) {
+    if(lookup(key) != -1) {
+      return;
+    }
+    map.put(key, value);
+  }
+  public Boolean erase(Object key) {
+    if(map.containsKey(key)) {
+      map.remove(key);
+      return true;
+    }
+    return false;
   }
   @EpiUserType(ctorParams = {String.class, int.class, int.class})
   public static class Op {

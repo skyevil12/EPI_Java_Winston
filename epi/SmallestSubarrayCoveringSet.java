@@ -4,9 +4,8 @@ import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 public class SmallestSubarrayCoveringSet {
 
   // Represent subarray by starting and ending indices, inclusive.
@@ -22,8 +21,38 @@ public class SmallestSubarrayCoveringSet {
 
   public static Subarray findSmallestSubarrayCoveringSet(List<String> paragraph,
                                                          Set<String> keywords) {
-    // TODO - you fill in here.
-    return new Subarray(0, 0);
+    //13.7題解未
+    Subarray rt = new Subarray(0, Integer.MAX_VALUE - 1);
+    Map<String, Integer> strCnt = new HashMap();
+    int left = 0;
+
+    for(int i = 0; i < paragraph.size(); i++) {
+      String cur = paragraph.get(i);
+      if(keywords.contains(cur)) {
+        strCnt.put(cur, strCnt.getOrDefault(cur, 0) + 1);
+      }
+      /*
+      My paramount object in this struggle is to save the Union,
+      T O(P)  S O(K)
+       */
+      while(strCnt.size() == keywords.size()) {
+        //Only update when found minimum
+        if(i - left + 1 < rt.end - rt.start + 1) {
+          rt.start = left;
+          rt.end = i;
+        }
+        String lStr = paragraph.get(left++);
+        if(strCnt.containsKey(lStr)) {
+          if(strCnt.get(lStr) == 1) {
+            strCnt.remove(lStr);
+          } else {
+            strCnt.put(lStr, strCnt.get(lStr) - 1);
+          }
+        }
+      }
+    }
+
+    return rt;
   }
   @EpiTest(testDataFile = "smallest_subarray_covering_set.tsv")
   public static int findSmallestSubarrayCoveringSetWrapper(
