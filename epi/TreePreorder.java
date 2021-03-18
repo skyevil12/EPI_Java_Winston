@@ -20,26 +20,27 @@ public class TreePreorder {
 
   @EpiTest(testDataFile = "tree_preorder.tsv")
   public static List<Integer> preorderTraversal(BinaryTreeNode<Integer> tree) {
-    /*
-      T O(N) S O(h) h is logN - N
-     */
-    List<Integer> rtList = new ArrayList<>();
-
-    Deque<BinaryTreeNode<Integer>> stack = new ArrayDeque<>();
-    BinaryTreeNode<Integer> root = tree;
-
-    while(!stack.isEmpty() || root != null) {
-      while(root != null) {
-        rtList.add(root.data);
-        stack.push(root);
-        root = root.left;
-      }
-
-      BinaryTreeNode tmp = stack.pop();
-      root = tmp.right;
-    }
-
-    return rtList;
+//    /*
+//      T O(N) S O(h) h is logN - N
+//     */
+//    List<Integer> rtList = new ArrayList<>();
+//
+//    Deque<BinaryTreeNode<Integer>> stack = new ArrayDeque<>();
+//    BinaryTreeNode<Integer> root = tree;
+//
+//    while(!stack.isEmpty() || root != null) {
+//      while(root != null) {
+//        rtList.add(root.data);
+//        stack.push(root);
+//        root = root.left;
+//      }
+//
+//      BinaryTreeNode tmp = stack.pop();
+//      root = tmp.right;
+//    }
+//
+//    return rtList;
+    return epi.kt.TreePreorder.INSTANCE.preorderTraversal(tree);
   }
 
   public static void main(String[] args) {
