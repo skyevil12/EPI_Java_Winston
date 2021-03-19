@@ -4,8 +4,13 @@ import epi.test_framework.GenericTest;
 public class ReverseDigits {
   @EpiTest(testDataFile = "reverse_digits.tsv")
   public static long reverse(int x) {
-    // TODO - you fill in here.
-    return 0;
+    //T O(N) S O(N)
+    long lX = x;
+    if(lX < 0) {
+      lX *= -1;
+    }
+    StringBuilder xStrSb = new StringBuilder(String.valueOf(lX));
+    return x < 0 ? -1 * Long.parseLong(xStrSb.reverse().toString()) : Long.parseLong(xStrSb.reverse().toString());
   }
 
   public static void main(String[] args) {

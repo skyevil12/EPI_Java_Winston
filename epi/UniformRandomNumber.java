@@ -15,9 +15,29 @@ public class UniformRandomNumber {
   }
 
   public static int uniformRandom(int lowerBound, int upperBound) {
-    // TODO - you fill in here.
-    return 0;
+    int tmp = 1, n = 0, diff = upperBound - lowerBound;
+    while(tmp - 1 <= diff) {
+      tmp <<= 1;
+      n++;
+    }
+
+    int rt = getRan(n);
+    while(rt > diff) {
+      rt = getRan(n);
+    }
+
+    return lowerBound + rt;
   }
+
+  private static int getRan(int n) {
+    int rt = 0;
+    for(int i = 0; i < n; i++) {
+      rt <<= 1;
+      rt += zeroOneRandom();
+    }
+    return rt;
+  }
+
   private static boolean uniformRandomRunner(TimedExecutor executor,
                                              int lowerBound, int upperBound)
       throws Exception {
