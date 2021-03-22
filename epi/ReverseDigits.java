@@ -4,13 +4,21 @@ import epi.test_framework.GenericTest;
 public class ReverseDigits {
   @EpiTest(testDataFile = "reverse_digits.tsv")
   public static long reverse(int x) {
-    //T O(N) S O(N)
-    long lX = x;
-    if(lX < 0) {
-      lX *= -1;
-    }
-    StringBuilder xStrSb = new StringBuilder(String.valueOf(lX));
-    return x < 0 ? -1 * Long.parseLong(xStrSb.reverse().toString()) : Long.parseLong(xStrSb.reverse().toString());
+//    //T O(log10 X) S O(1)
+//    boolean isNeg = x < 0;
+//    long lX = x;
+//    if(isNeg) {
+//      lX *= -1;
+//    }
+//
+//    long rt = 0;
+//    while(lX > 0) {
+//      rt = rt * 10 + lX % 10;
+//      lX /= 10;
+//    }
+//
+//    return isNeg ? -rt : rt;
+    return epi.kt.ReverseDigits.INSTANCE.reverse(x);
   }
 
   public static void main(String[] args) {
