@@ -10,23 +10,35 @@ import java.util.*;
 public class RandomPermutation {
 
   public static List<Integer> computeRandomPermutation(int n) {
-    /*List<Integer> list = new ArrayList<>(n);
-
+//    //Brute force
+//    Set<Integer> set = new HashSet<>();
+//    List<Integer> rt = new ArrayList<>();
+//    Random random = new Random();
+//    while(set.size() < n) {
+//      int num = random.nextInt(n);
+//      if(set.add(num)) {
+//        rt.add(num);
+//      }
+//    }
+//    return rt;
+    Integer[] rt = new Integer[n];
     for(int i = 0; i < n; i++) {
-      list.add(i);
+      rt[i] = i;
     }
 
-    OfflineSampling.randomSampling(n, list);
-
-    return list;*/
-
-    //Brute force hashMap?? Why not work?
-    Set<Integer> rtSet = new HashSet();
     Random random = new Random();
-    while(rtSet.size() < n) {
-      rtSet.add(random.nextInt(n));
+    //Should only consume N time api
+    for(int i = 0; i < n; i++) {
+      swap(rt, i, i + random.nextInt(n - i));
     }
-    return new ArrayList<>(rtSet);
+
+    return Arrays.asList(rt);
+  }
+
+  private static void swap(Integer[] nums, int i, int j) {
+    Integer tmp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = tmp;
   }
   private static int factorial(int n) {
     return n <= 1 ? 1 : n * factorial(n - 1);
