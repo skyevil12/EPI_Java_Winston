@@ -4,7 +4,8 @@ import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
-import java.util.List;
+import java.util.*;
+
 public class SmallestSubarrayCoveringAllValues {
 
   public static class Subarray {
@@ -21,8 +22,24 @@ public class SmallestSubarrayCoveringAllValues {
   public static Subarray
   findSmallestSequentiallyCoveringSubset(List<String> paragraph,
                                          List<String> keywords) {
-    // TODO - you fill in here.
-    return new Subarray(0, 0);
+//    Subarray rt = new Subarray(0, paragraph.size() - 1);
+//    int left = 0, len = paragraph.size();
+//    int keyIdx = 0;
+//    for(int i = 0; i < len; i++) {
+//      String word = paragraph.get(i);
+//      if(keywords.get(keyIdx).equals(word)) {
+//        if(keyIdx == 0) {
+//          left = i;
+//        } else if(keyIdx == keywords.size() - 1) {
+//          if(i - left < rt.end - rt.start) {
+//            rt.start = left;
+//            rt.end = i;
+//          }
+//        }
+//        keyIdx++;
+//      }
+//    }
+    return new Subarray(-1, -1);
   }
   @EpiTest(testDataFile = "smallest_subarray_covering_all_values.tsv")
   public static int findSmallestSequentiallyCoveringSubsetWrapper(
