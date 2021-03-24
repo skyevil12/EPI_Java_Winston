@@ -22,24 +22,41 @@ public class SmallestSubarrayCoveringAllValues {
   public static Subarray
   findSmallestSequentiallyCoveringSubset(List<String> paragraph,
                                          List<String> keywords) {
-//    Subarray rt = new Subarray(0, paragraph.size() - 1);
-//    int left = 0, len = paragraph.size();
-//    int keyIdx = 0;
-//    for(int i = 0; i < len; i++) {
-//      String word = paragraph.get(i);
-//      if(keywords.get(keyIdx).equals(word)) {
-//        if(keyIdx == 0) {
-//          left = i;
-//        } else if(keyIdx == keywords.size() - 1) {
-//          if(i - left < rt.end - rt.start) {
-//            rt.start = left;
-//            rt.end = i;
-//          }
-//        }
-//        keyIdx++;
-//      }
-//    }
-    return new Subarray(-1, -1);
+    /* Leetcode 727
+    apple banana cat apple
+
+    banana apple
+     */
+    Subarray rt = new Subarray(0, paragraph.size() - 1);
+    int len = paragraph.size(), kLen = keywords.size();
+    //Brute force T O(N^2) S O(1)
+    for(int i = 0; i < len; i++) {
+      String word = paragraph.get(i);
+      if(!word.equals(keywords.get(0))) {
+        continue;
+      }
+      if(kLen == 1) {
+        rt.start = i;
+        rt.end = i;
+        break;
+      }
+      int kIdx = 1;
+      for(int j = i + 1; j < len; j++) {
+        word = paragraph.get(j);
+        if(word.equals(keywords.get(kIdx))) {
+          if(kIdx == keywords.size() - 1) {
+            if(j - i < rt.end - rt.start) {
+              rt.start = i;
+              rt.end = j;
+            }
+            break;
+          }
+          kIdx++;
+        }
+      }
+    }
+
+    return rt;
   }
   @EpiTest(testDataFile = "smallest_subarray_covering_all_values.tsv")
   public static int findSmallestSequentiallyCoveringSubsetWrapper(
