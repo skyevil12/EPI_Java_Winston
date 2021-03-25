@@ -16,7 +16,9 @@ public class TreeFromPreorderWithNull {
 //    return core(pQ);
     //T O(N) S O(1) except input list
 //    sI = 0;
-    return coreEx(preorder, new int[]{0});
+//    return coreEx(preorder, new int[]{0});
+
+    return new epi.kt.TreeFromPreorderWithNull().reconstructPreorder(preorder);
   }
 
 //  private static int sI = 0;

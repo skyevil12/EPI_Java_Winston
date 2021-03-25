@@ -3,31 +3,10 @@ package epi.kt
 import epi.BinaryTree
 
 object SuccessorInTree {
-    //T O(h)    S O(1)
     fun findSuccessor(node: BinaryTree<Int>) : BinaryTree<Int>? {
-//        if(node == null) {
-//            return null
-//        }
-//
-//        var rNode = node.right
-//        if(rNode != null) {
-//            var rt = rNode
-//            while (rNode != null) {
-//                rt = rNode
-//                rNode = rNode.left
-//            }
-//            return rt
-//        }
-//
-//        var cur = node
-//        var parent = cur.parent
-//        while(parent != null && cur != parent.left) {
-//            cur = parent
-//            parent = parent.parent
-//        }
-//
-//        return parent
+        //T O(h) S O(1)
         if(node.right != null) {
+            //Find left most of the right node
             var cur = node.right
             while(cur.left != null) {
                 cur = cur.left
@@ -35,11 +14,11 @@ object SuccessorInTree {
             return cur
         }
 
-        var rt = node
-        while(rt.parent != null && rt == rt.parent.right) {
-            rt = rt.parent
+        var cur = node
+        while(cur.parent != null && cur === cur.parent.right) {
+            cur = cur.parent
         }
 
-        return rt.parent
+        return cur.parent
     }
 }

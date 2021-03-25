@@ -23,12 +23,13 @@ public class TreeFromPreorderInorder {
     inOrder left most first
     */
 //    return core(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
-    Map<Integer, Integer> iIdxMap = new HashMap<>();
-    for(int i = 0; i < inorder.size(); i++) {
-      iIdxMap.put(inorder.get(i), i);
-    }
-    //CoreEx is T O(N) S O(N + h(logN)) because use map to accelerate search root action
-    return coreEx(preorder, iIdxMap, 0, preorder.size() - 1, 0, inorder.size() - 1);
+//    Map<Integer, Integer> iIdxMap = new HashMap<>();
+//    for(int i = 0; i < inorder.size(); i++) {
+//      iIdxMap.put(inorder.get(i), i);
+//    }
+//    //CoreEx is T O(N) S O(N + h(logN)) because use map to accelerate search root action
+//    return coreEx(preorder, iIdxMap, 0, preorder.size() - 1, 0, inorder.size() - 1);
+    return epi.kt.TreeFromPreorderInorder.INSTANCE.binaryTreeFromPreorderInorder(preorder, inorder);
   }
 
   private static BinaryTreeNode<Integer> coreEx(List<Integer> preOrder, Map<Integer, Integer> iIdxMap, int pSt, int pEd, int iSt, int iEd) {

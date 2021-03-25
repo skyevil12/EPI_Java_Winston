@@ -13,7 +13,7 @@ object IsListCyclic {
         while(fast?.next != null) {
             slow = slow!!.next
             fast = fast!!.next.next
-            if(slow == fast) {
+            if(slow === fast) {
                 //F + a == nC, F = C - a
                 var inter = slow
                 var nHead = head
