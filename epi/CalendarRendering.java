@@ -3,7 +3,11 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class CalendarRendering {
   @EpiUserType(ctorParams = {int.class, int.class})
 
@@ -29,8 +33,30 @@ public class CalendarRendering {
   @EpiTest(testDataFile = "calendar_rendering.tsv")
 
   public static int findMaxSimultaneousEvents(List<Event> A) {
-    // TODO - you fill in here.
-    return 0;
+    //T O(NlogN)  S O(N)
+    Queue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+      @Override
+      public int compare(int[] o1, int[] o2) {
+        if(o1[0] == o2[0]) {
+          return o1[1] - o2[1];
+        }
+        return o1[0] - o2[0];
+      }
+    });
+
+    for(Event e : A) {
+      pq.offer(new int[]{e.start, 1});
+      pq.offer(new int[]{e.finish + 1, -1});
+    }
+
+    int lSum = 0, rt = 0;
+
+    while(!pq.isEmpty()) {
+      lSum += pq.poll()[1];
+      rt = Math.max(rt, lSum);
+    }
+
+    return rt;
   }
 
   public static void main(String[] args) {

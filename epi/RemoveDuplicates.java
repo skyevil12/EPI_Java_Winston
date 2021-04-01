@@ -5,7 +5,9 @@ import epi.test_framework.EpiTestExpectedType;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiPredicate;
 public class RemoveDuplicates {
@@ -47,7 +49,19 @@ public class RemoveDuplicates {
     }
   }
   public static void eliminateDuplicate(List<Name> names) {
-    // TODO - you fill in here.
+    //Better solution: update original list without using new tmp list
+    //T O(NlogN)
+    Collections.sort(names);
+
+    int idx = 0;
+    //T O(N)
+    for(int i = 1; i < names.size(); i++) {
+      while(!names.get(i).firstName.equals(names.get(idx).firstName)) {
+        names.set(++idx, names.get(i));
+      }
+    }
+
+    names.subList(idx + 1, names.size()).clear();
     return;
   }
   @EpiTest(testDataFile = "remove_duplicates.tsv")
