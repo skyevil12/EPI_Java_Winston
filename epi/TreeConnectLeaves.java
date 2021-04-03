@@ -11,10 +11,11 @@ public class TreeConnectLeaves {
 
   public static List<BinaryTreeNode<Integer>>
   createListOfLeaves(BinaryTreeNode<Integer> tree) {
+    return epi.kt.TreeConnectLeaves.INSTANCE.createListOfLeaves(tree);
     //T O(N) S O(h) besides output list
-    List<BinaryTreeNode<Integer>> rtList = new ArrayList<>();
-    preOrder(tree, rtList);
-    return rtList;
+//    List<BinaryTreeNode<Integer>> rtList = new ArrayList<>();
+//    preOrder(tree, rtList);
+//    return rtList;
   }
 
   private static void preOrder(BinaryTreeNode<Integer> node, List<BinaryTreeNode<Integer>> list) {

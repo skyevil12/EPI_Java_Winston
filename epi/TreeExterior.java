@@ -11,21 +11,22 @@ public class TreeExterior {
 
   public static List<BinaryTreeNode<Integer>>
   exteriorBinaryTree(BinaryTreeNode<Integer> tree) {
-    List<BinaryTreeNode<Integer>> rtList = new ArrayList<>();
-    if(tree == null) {
-      return rtList;
-    }
-
-    rtList.add(tree);
-    List<BinaryTreeNode<Integer>> lList = new ArrayList<>();
-    lCore(tree.left, lList, true);
-    rtList.addAll(lList);
-
-    List<BinaryTreeNode<Integer>> rList = new ArrayList<>();
-    rCore(tree.right, rList, true);
-    rtList.addAll(rList);
-
-    return rtList;
+//    List<BinaryTreeNode<Integer>> rtList = new ArrayList<>();
+//    if(tree == null) {
+//      return rtList;
+//    }
+//
+//    rtList.add(tree);
+//    List<BinaryTreeNode<Integer>> lList = new ArrayList<>();
+//    lCore(tree.left, lList, true);
+//    rtList.addAll(lList);
+//
+//    List<BinaryTreeNode<Integer>> rList = new ArrayList<>();
+//    rCore(tree.right, rList, true);
+//    rtList.addAll(rList);
+//
+//    return rtList;
+      return epi.kt.TreeExterior.INSTANCE.exteriorBinaryTree(tree);
   }
 
   //PreOrder - could get the left exterior before the left leaves

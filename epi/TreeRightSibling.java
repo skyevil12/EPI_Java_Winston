@@ -59,20 +59,21 @@ public class TreeRightSibling {
 //    }
 //
 //    return;
-    //DFS, T O(N) S O(h)
-    if(tree == null) {
-      return;
-    }
-
-    if(tree.left != null) {
-      tree.left.next = tree.right;
-    }
-
-    if(tree.right != null && tree.next != null) {
-      tree.right.next = tree.next.left;
-    }
-    constructRightSibling(tree.left);
-    constructRightSibling(tree.right);
+//    //DFS, T O(N) S O(h)
+//    if(tree == null) {
+//      return;
+//    }
+//
+//    if(tree.left != null) {
+//      tree.left.next = tree.right;
+//    }
+//
+//    if(tree.right != null && tree.next != null) {
+//      tree.right.next = tree.next.left;
+//    }
+//    constructRightSibling(tree.left);
+//    constructRightSibling(tree.right);
+    epi.kt.TreeRightSibling.INSTANCE.constructRightSibling(tree);
   }
   private static BinaryTreeNode<Integer>
   cloneTree(BinaryTree<Integer> original) {
