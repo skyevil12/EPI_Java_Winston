@@ -1,4 +1,5 @@
 package epi;
+import epi.kt.TreeRightSiblingV2;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
@@ -73,7 +74,8 @@ public class TreeRightSibling {
 //    }
 //    constructRightSibling(tree.left);
 //    constructRightSibling(tree.right);
-    epi.kt.TreeRightSibling.INSTANCE.constructRightSibling(tree);
+//    epi.kt.TreeRightSibling.INSTANCE.constructRightSibling(tree);
+    new TreeRightSiblingV2().constructRightSibling(tree);
   }
   private static BinaryTreeNode<Integer>
   cloneTree(BinaryTree<Integer> original) {
