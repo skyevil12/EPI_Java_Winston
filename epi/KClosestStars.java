@@ -33,21 +33,22 @@ public class KClosestStars {
   }
 
   public static List<Star> findClosestKStars(Iterator<Star> stars, int k) {
-    Queue<Star> pq = new PriorityQueue<>(new Comparator<Star>() {
-      @Override
-      public int compare(Star o1, Star o2) {
-        return (int) (o2.distance() - o1.distance());
-      }
-    });
-
-    while(stars.hasNext()) {
-      pq.offer(stars.next());
-      if(pq.size() > k) {
-        pq.poll();
-      }
-    }
-
-    return new ArrayList<>(pq);
+//    Queue<Star> pq = new PriorityQueue<>(new Comparator<Star>() {
+//      @Override
+//      public int compare(Star o1, Star o2) {
+//        return (int) (o2.distance() - o1.distance());
+//      }
+//    });
+//
+//    while(stars.hasNext()) {
+//      pq.offer(stars.next());
+//      if(pq.size() > k) {
+//        pq.poll();
+//      }
+//    }
+//
+//    return new ArrayList<>(pq);
+    return epi.kt.KClosestStars.INSTANCE.findClosestKStars(stars, k);
   }
   @EpiTest(testDataFile = "k_closest_stars.tsv")
   public static List<Star> findClosestKStarsWrapper(List<Star> stars, int k) {
