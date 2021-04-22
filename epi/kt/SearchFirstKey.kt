@@ -1,6 +1,32 @@
 package epi.kt
 
 object SearchFirstKey {
+    fun searchFirstOfK(A: List<Int>, k: Int): Int {
+        var rt = -1
+        var l = 0
+        var r = A.size - 1
+
+        while(l <= r) {
+            val m = l + (r - l) / 2
+            val mVal = A[m]
+
+            when {
+                mVal > k -> {
+                    r = m - 1
+                }
+                mVal == k -> {
+                    rt = m
+                    r = m - 1
+                }
+                mVal < k -> {
+                    l = m + 1
+                }
+            }
+        }
+
+        return rt
+    }
+
     fun searchFirstOfKV1(A: Array<Int>?, k: Int) : Int {
         if(A == null || A.isEmpty()) {
             return -1
@@ -19,13 +45,13 @@ object SearchFirstKey {
             }
         }
 
-        return if(l < A.size) {
-            l
-        } else {
+        return if(l >= A.size) {
             -1
+        } else {
+            l
         }
     }
-
+    //https://leetcode.com/problems/find-peak-element/ similar question!
     fun searchFirstOfKV2(A: Array<Int>?) : Int {
         if(A == null) {
             return -1
@@ -37,7 +63,7 @@ object SearchFirstKey {
 
         while(l < r) {
             val m = l + (r - l) / 2
-            if(A[m] < A[m + 1]) {
+            if(A[m] <= A[m + 1]) {
                 r = m
             } else {
                 l = m + 1
@@ -47,6 +73,7 @@ object SearchFirstKey {
         return l
     }
 
+    //https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
     fun searchFirstOfKV3(A: Array<Int>?, k: Int) : Array<Int> {
         if(A == null || A.isEmpty()) {
             return arrayOf(-1, -1)
