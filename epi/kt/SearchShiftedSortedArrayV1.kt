@@ -1,6 +1,7 @@
 package epi.kt
 
 object SearchShiftedSortedArrayV1 {
+    //https://leetcode.com/problems/peak-index-in-a-mountain-array/submissions/
     fun searchPeak(A : Array<Int>) : Int {
         /*
             if pivot >= right
@@ -15,7 +16,7 @@ object SearchShiftedSortedArrayV1 {
             val m = l + (r - l) / 2
             val cur = A[m]
 
-            if(cur >= A[r]) {
+            if(m + 1 < A.size && cur > A[m + 1]) {
                 r = m
             } else {
                 l = m + 1

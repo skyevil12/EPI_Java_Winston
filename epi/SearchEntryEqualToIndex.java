@@ -9,26 +9,27 @@ public class SearchEntryEqualToIndex {
 
   //T O(logN) S O(1)
   public static int searchEntryEqualToItsIndex(List<Integer> A) {
-    int len = A.size(), l = 0, r = len - 1;
-    /*
-      [-5, -3, -2, -1, 1, 2, 3, 4, 6, 8, 9, 11]
-      l 0   6 9 11
-      r 11
-      m 5   8 10
-     */
-    while(l <= r) {
-      int m = l + (r - l) / 2;
-      int cur = A.get(m);
-      if(cur == m) {
-        return m;
-      } else if(cur < m) {
-        l = m + 1;
-      } else {
-        //cur > m
-        r = m - 1;
-      }
-    }
-    return -1;
+//    int len = A.size(), l = 0, r = len - 1;
+//    /*
+//      [-5, -3, -2, -1, 1, 2, 3, 4, 6, 8, 9, 11]
+//      l 0   6 9 11
+//      r 11
+//      m 5   8 10
+//     */
+//    while(l <= r) {
+//      int m = l + (r - l) / 2;
+//      int cur = A.get(m);
+//      if(cur == m) {
+//        return m;
+//      } else if(cur < m) {
+//        l = m + 1;
+//      } else {
+//        //cur > m
+//        r = m - 1;
+//      }
+//    }
+//    return -1;
+      return epi.kt.SearchEntryEqualToIndex.INSTANCE.searchEntryEqualToItsIndex(A);
   }
   @EpiTest(testDataFile = "search_entry_equal_to_index.tsv")
   public static void searchEntryEqualToItsIndexWrapper(TimedExecutor executor,
