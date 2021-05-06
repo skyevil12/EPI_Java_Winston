@@ -3,23 +3,12 @@ package epi.kt
 object RealSquareRootV1 {
     //https://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
     fun divide(x: Double, y: Double) : Double {
-        var l = 0.0
-        var r = Double.MAX_VALUE
-
-        while(true) {
-            val m = l + (r - l) * 0.5
-            when {
-                compare(y * m, x) == 0 -> {
-                    return m
-                }
-                compare(y * m, x) == 1 -> {
-                    r = m
-                }
-                compare(y * m, x) == -1 -> {
-                    l = m
-                }
-            }
-        }
+//        var l = 1.0
+//        var r =
+//        if(x > y) {
+//
+//        }
+        return 0.0
     }
 
     fun compare(a: Double, b: Double) : Int {
