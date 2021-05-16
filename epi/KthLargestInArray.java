@@ -19,26 +19,27 @@ public class KthLargestInArray {
       (3, 2,1,5,4)
       k 1
      */
-    Integer[] nums = new Integer[A.size()];
-    for(int i = 0; i < nums.length; i++) {
-      nums[i] = A.get(i);
-    }
-    int l = 0, r = nums.length - 1, m = 0;
-    k--;
-    k = nums.length - 1 - k;
-    while(l <= r) {
-      m = new Random().nextInt(r - l + 1) + l;
-      swap(nums, m, r);
-      int pivot = pagination(nums, l, r);
-      if(k == pivot) {
-        return nums[pivot].intValue();
-      } else if(k < pivot) {
-        r = pivot - 1;
-      } else{
-        l = pivot + 1;
-      }
-    }
-    return -1;
+//    Integer[] nums = new Integer[A.size()];
+//    for(int i = 0; i < nums.length; i++) {
+//      nums[i] = A.get(i);
+//    }
+//    int l = 0, r = nums.length - 1, m = 0;
+//    k--;
+//    k = nums.length - 1 - k;
+//    while(l <= r) {
+//      m = new Random().nextInt(r - l + 1) + l;
+//      swap(nums, m, r);
+//      int pivot = pagination(nums, l, r);
+//      if(k == pivot) {
+//        return nums[pivot].intValue();
+//      } else if(k < pivot) {
+//        r = pivot - 1;
+//      } else{
+//        l = pivot + 1;
+//      }
+//    }
+//    return -1;
+    return epi.kt.KthLargestInArray.INSTANCE.findKthLargestStable(k, A);
   }
 
   private static int pagination(Integer[] nums, int l, int r) {

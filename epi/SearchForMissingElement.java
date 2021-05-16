@@ -50,33 +50,37 @@ public class SearchForMissingElement {
   @EpiTest(testDataFile = "find_missing_and_duplicate.tsv")
 
   public static DuplicateAndMissing findDuplicateMissing(List<Integer> A) {
-    int xorRt = 0;
-
-    for(int i = 0; i < A.size(); i++) {
-      xorRt ^= i;
-      xorRt ^= A.get(i);
+    //T O(N) S O(1)
+    int rt = 0;
+    int n = A.size();
+    //XOR all index and value to get miss ^ dup
+    for(int i = 0; i < n; i++) {
+      rt ^= i;
+      rt ^= A.get(i);
     }
 
-    int leastDiff = xorRt & ~(xorRt - 1);
-    int missOrDup = 0;
+    //Know the least diff bit
+    int rightDiff = rt &(~(rt - 1));
 
-    for(int i = 0; i < A.size(); i++) {
-      if((i & leastDiff) != 0) {
-        missOrDup ^= i;
+    //Find least diff bit valid num and XOR all of them
+    int cand = 0;
+    for(int i = 0; i < n; i++) {
+      if((rightDiff & i) != 0) {
+        cand ^= i;
       }
 
-      if((A.get(i) & leastDiff) != 0) {
-        missOrDup ^= A.get(i);
-      }
-    }
-
-    for(int num : A) {
-      if(num == missOrDup) {
-        return new DuplicateAndMissing(num, xorRt ^ num);
+      if((rightDiff & A.get(i)) != 0) {
+        cand ^= A.get(i);
       }
     }
 
-    return new DuplicateAndMissing(xorRt ^ missOrDup, missOrDup);
+    for(int i = 0; i < n; i++) {
+      if(cand == A.get(i)) {
+        return new DuplicateAndMissing(cand, rt ^ cand);
+      }
+    }
+
+    return new DuplicateAndMissing(rt ^ cand, cand);
   }
 
   public static void main(String[] args) {
