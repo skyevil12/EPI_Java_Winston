@@ -10,23 +10,26 @@ public class IsAnonymousLetterConstructible {
 
   public static boolean isLetterConstructibleFromMagazine(String letterText,
                                                           String magazineText) {
-    //T O(L + M)  S O(distinct char in L)
-    Map<Character, Integer> map = new HashMap<>();
+    Map<Character, Integer> letMap = new HashMap();
+    //T O(L + M) S O(distinct of L), it is better to construct letter map because this should be smaller than magazine
     for(char ch : letterText.toCharArray()) {
-      map.put(ch, map.getOrDefault(ch, 0) + 1);
+      letMap.put(ch, letMap.getOrDefault(ch, 0) + 1);
     }
 
     for(char ch : magazineText.toCharArray()) {
-      if(map.containsKey(ch)) {
-        if(map.get(ch) == 1) {
-          map.remove(ch);
-        } else {
-          map.put(ch, map.get(ch) - 1);
-        }
+      if(!letMap.containsKey(ch)) {
+        continue;
+      }
+
+      int cnt = letMap.get(ch);
+      if(cnt == 1) {
+        letMap.remove(ch);
+      } else {
+        letMap.put(ch, cnt - 1);
       }
     }
 
-    return map.isEmpty();
+    return letMap.isEmpty();
   }
 
   public static void main(String[] args) {

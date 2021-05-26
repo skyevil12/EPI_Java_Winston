@@ -4,98 +4,91 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LruCache {
-  /*
-  private Queue<Integer> queue = new ArrayDeque<>();
-  private Map<Integer, Integer> map = new HashMap<>();
-  private int size;
+  class Node {
+    Node next, prev;
+    int key, value;
+
+    Node(int key, int value) {
+      this.key = key;
+      this.value = value;
+    }
+
+    Node() {
+
+    }
+  }
+
+  Node head, tail;
+  int size;
+  Map<Integer, Node> map;
+
+  private void remove(Node node) {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+
+  private void offerLast(Node node) {
+    Node oLast = tail.prev;
+    tail.prev = node;
+    node.next = tail;
+    oLast.next = node;
+    node.prev = oLast;
+  }
+
+  private void pollFirst() {
+    Node oFirst = head.next;
+    head.next = oFirst.next;
+    oFirst.next.prev = head;
+    oFirst.prev = null;
+    oFirst.next = null;
+    map.remove(oFirst.key);
+  }
 
   LruCache(final int capacity) {
+    map = new HashMap<>();
+    head = new Node();
+    tail = new Node();
+    head.next = tail;
+    tail.prev = head;
     size = capacity;
   }
-  //Return -1 when not found
+
   public Integer lookup(Integer key) {
     if(!map.containsKey(key)) {
       return -1;
     }
 
-    Queue<Integer> nQ = new ArrayDeque<>();
-    while(!queue.isEmpty()) {
-      int cur = queue.poll();
-      if(cur != key) {
-        nQ.offer(cur);
-      }
-    }
-    nQ.offer(key);
-    queue = nQ;
-    return map.get(key);
+    Node node = map.get(key);
+    remove(node);
+    offerLast(node);
+    return node.value;
   }
-  //Do not do anything if key exists
+
   public void insert(Integer key, Integer value) {
     if(lookup(key) != -1) {
       return;
     }
-    queue.offer(key);
-    map.put(key, value);
-    if(queue.size() > size) {
-      erase(queue.poll());
+
+    Node nNode = new Node(key, value);
+    offerLast(nNode);
+    map.put(key, nNode);
+    if(map.size() > size) {
+      pollFirst();
     }
+    return;
   }
   public Boolean erase(Object key) {
-    if(!(key instanceof Integer)) {
+    if(!map.containsKey(key)) {
       return false;
     }
 
-    if(map.containsKey(key)) {
-      Queue<Integer> nQ = new ArrayDeque<>();
-      while(!queue.isEmpty()) {
-        int cur = queue.poll();
-        if(cur != (Integer)key) {
-          nQ.offer(cur);
-        }
-      }
-
-      queue = nQ;
-      map.remove(key);
-      return true;
-    }
-    return false;
-  }
-   */
-  private Map<Integer, Integer> map;
-  LruCache(final int capacity) {
-    map = new LinkedHashMap(capacity, 1.0f, true) {
-      @Override
-      protected boolean removeEldestEntry(Map.Entry eldest) {
-        return this.size() > capacity;
-      }
-    };
-  }
-  //Must return -1 if not exist
-  public Integer lookup(Integer key) {
-    if(!map.containsKey(key)) {
-      return -1;
-    }
-    return map.get(key);
-  }
-  //Must remove over capacity unit
-  public void insert(Integer key, Integer value) {
-    if(lookup(key) != -1) {
-      return;
-    }
-    map.put(key, value);
-  }
-  public Boolean erase(Object key) {
-    if(map.containsKey(key)) {
-      map.remove(key);
-      return true;
-    }
-    return false;
+    Node rmNode = map.get(key);
+    remove(rmNode);
+    map.remove(key);
+    return true;
   }
   @EpiUserType(ctorParams = {String.class, int.class, int.class})
   public static class Op {
