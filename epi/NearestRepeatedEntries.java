@@ -10,20 +10,21 @@ public class NearestRepeatedEntries {
   @EpiTest(testDataFile = "nearest_repeated_entries.tsv")
 
   public static int findNearestRepetition(List<String> paragraph) {
-    Map<String, Integer> strIdx = new HashMap<>();
-    int minDis = Integer.MAX_VALUE;
-    //T O(N)  S O(dis N)
-    for(int i = 0; i < paragraph.size(); i++) {
-      String str = paragraph.get(i);
-
-      if(strIdx.containsKey(str)) {
-        minDis = Math.min(minDis, i - strIdx.get(str));
-      }
-
-      strIdx.put(str, i);
-    }
-
-    return minDis == Integer.MAX_VALUE ? -1 : minDis;
+//    Map<String, Integer> strIdx = new HashMap<>();
+//    int minDis = Integer.MAX_VALUE;
+//    //T O(N)  S O(dis N)
+//    for(int i = 0; i < paragraph.size(); i++) {
+//      String str = paragraph.get(i);
+//
+//      if(strIdx.containsKey(str)) {
+//        minDis = Math.min(minDis, i - strIdx.get(str));
+//      }
+//
+//      strIdx.put(str, i);
+//    }
+//
+//    return minDis == Integer.MAX_VALUE ? -1 : minDis;
+    return epi.kt.NearestRepeatedEntries.INSTANCE.findNearestRepetition(paragraph);
   }
 
   public static void main(String[] args) {
