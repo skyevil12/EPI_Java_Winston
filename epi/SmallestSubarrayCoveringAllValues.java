@@ -27,36 +27,70 @@ public class SmallestSubarrayCoveringAllValues {
 
     banana apple
      */
-    Subarray rt = new Subarray(0, paragraph.size() - 1);
-    int len = paragraph.size(), kLen = keywords.size();
-    //Brute force T O(N^2) S O(1)
-    for(int i = 0; i < len; i++) {
-      String word = paragraph.get(i);
-      if(!word.equals(keywords.get(0))) {
-        continue;
+//    Subarray rt = new Subarray(0, paragraph.size() - 1);
+//    int len = paragraph.size(), kLen = keywords.size();
+//    //Brute force T O(N^2) S O(1)
+//    for(int i = 0; i < len; i++) {
+//      String word = paragraph.get(i);
+//      if(!word.equals(keywords.get(0))) {
+//        continue;
+//      }
+//      if(kLen == 1) {
+//        rt.start = i;
+//        rt.end = i;
+//        break;
+//      }
+//      int kIdx = 1;
+//      for(int j = i + 1; j < len; j++) {
+//        word = paragraph.get(j);
+//        if(word.equals(keywords.get(kIdx))) {
+//          if(kIdx == keywords.size() - 1) {
+//            if(j - i < rt.end - rt.start) {
+//              rt.start = i;
+//              rt.end = j;
+//            }
+//            break;
+//          }
+//          kIdx++;
+//        }
+//      }
+//    }
+//
+//    return rt;
+      //T O(N) S O(K)
+      Map<String, Integer> keyIdxMap = new HashMap();
+      List<Integer> latestOccurance = new ArrayList<>(keywords.size());
+      List<Integer> minLenMap = new ArrayList<>(keywords.size());
+      for(int i = 0; i < keywords.size(); i++) {
+          keyIdxMap.put(keywords.get(i), i);
+          latestOccurance.add(-1);
+          minLenMap.add(Integer.MAX_VALUE);
       }
-      if(kLen == 1) {
-        rt.start = i;
-        rt.end = i;
-        break;
-      }
-      int kIdx = 1;
-      for(int j = i + 1; j < len; j++) {
-        word = paragraph.get(j);
-        if(word.equals(keywords.get(kIdx))) {
-          if(kIdx == keywords.size() - 1) {
-            if(j - i < rt.end - rt.start) {
-              rt.start = i;
-              rt.end = j;
-            }
-            break;
-          }
-          kIdx++;
-        }
-      }
-    }
 
-    return rt;
+      int minLen = Integer.MAX_VALUE;
+      Subarray rt = new Subarray(-1, -1);
+      for(int i = 0; i < paragraph.size(); i++) {
+          Integer kIdx = keyIdxMap.get(paragraph.get(i));
+          if(kIdx == null) {
+              continue;
+          }
+
+          if(kIdx == 0) {
+              minLenMap.set(0, 1);
+          } else if(minLenMap.get(kIdx - 1) != Integer.MAX_VALUE) {
+              int shortDis = i - latestOccurance.get(kIdx - 1);
+              minLenMap.set(kIdx, shortDis + minLenMap.get(kIdx - 1));
+          }
+          latestOccurance.set(kIdx, i);
+
+          if(kIdx == keywords.size() - 1 && minLenMap.get(kIdx) < minLen) {
+              minLen = minLenMap.get(kIdx);
+              rt.start = i - minLen + 1;
+              rt.end = i;
+          }
+      }
+
+      return rt;
   }
   @EpiTest(testDataFile = "smallest_subarray_covering_all_values.tsv")
   public static int findSmallestSequentiallyCoveringSubsetWrapper(

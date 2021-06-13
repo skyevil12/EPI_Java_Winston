@@ -59,6 +59,10 @@ public class SmallestSubarrayCoveringSet {
     return rt;
   }
 
+    //V1 findSmallestSubarrayCoveringSet(paragraph, new HashSet(paragraph))
+    //V2 all uniq str len
+    //V3 CCCBBAA  k = 2 -> CBACBAC, Leetcode #358
+
   public static Subarray findSmallestSubarrayCoveringSet(List<String> paragraph,
                                                          Set<String> keywords) {
 //    Subarray rt = new Subarray(0, Integer.MAX_VALUE - 1);
@@ -93,7 +97,40 @@ public class SmallestSubarrayCoveringSet {
 //
 //    return rt;
 
-    return findSmallestSubarrayCoveringSetIter(paragraph.iterator(), new ArrayList<>(keywords));
+//    return findSmallestSubarrayCoveringSetIter(paragraph.iterator(), new ArrayList<>(keywords));
+      int cnt  = keywords.size(), left = 0, len = paragraph.size();
+      Subarray rt = null;
+      Map<String, Integer> map = new HashMap<>();
+      for(String keyword : keywords) {
+          //Since keywords is set, always set cnt as 1
+          map.put(keyword, 1);
+      }
+      for(int i = 0; i < len; i++) {
+          String cur = paragraph.get(i);
+          if(!map.containsKey(cur)) {
+              continue;
+          }
+
+          map.put(cur, map.get(cur) - 1);
+          if(map.get(cur) == 0) {
+              cnt--;
+          }
+
+          while(cnt == 0) {
+              if(rt == null || rt.end - rt.start > i - left) {
+                  rt = new Subarray(left, i);
+              }
+              String lStr = paragraph.get(left);
+              left++;
+              if(map.containsKey(lStr)) {
+                  map.put(lStr, map.get(lStr) + 1);
+                  if(map.get(lStr) > 0) {
+                      cnt++;
+                  }
+              }
+          }
+      }
+      return rt;
   }
   @EpiTest(testDataFile = "smallest_subarray_covering_set.tsv")
   public static int findSmallestSubarrayCoveringSetWrapper(
