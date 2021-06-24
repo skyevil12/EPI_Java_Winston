@@ -8,54 +8,64 @@ public class LongestContainedInterval {
   @EpiTest(testDataFile = "longest_contained_interval.tsv")
 
   public static int longestContainedRange(List<Integer> A) {
-    //Brute force T O(NlogN)  S O(N)
-//    List<Integer> uA = new ArrayList<>(new HashSet<>(A));
-//    if(uA.size() <= 1) {
-//      return uA.size();
-//    }
-//    Collections.sort(uA);
-//    int rt = 0, len = uA.size();
-//    for(int i = 1; i < len; i++) {
-//      int lRt = 1;
-//      while(i < len && uA.get(i) - uA.get(i - 1) == 1) {
-//        lRt += 1;
-//        i++;
-//      }
-//      rt = Math.max(rt, lRt);
-//    }
-//    return rt;
-
-    //Better T O(N) S O(N)
-        /*
-    3,-2,7,9,8,1,2,0,-1,5,8
+    /*
+      (3,-2,7,9,8,1,2,0,-1,5,8)
+      3, -2, 7, 9, 8, 1, 2, 0, -1, 5
+      T O(N) S O(N)
      */
-    Map<Integer, Integer> valIdx = new HashMap<>();
-    for(int i = 0; i < A.size(); i++) {
-      valIdx.put(A.get(i), i);
+    Map<Integer, Boolean> map = new HashMap<>();
+    for(int cur : A) {
+      map.put(cur, true);
     }
-
     int rt = 0;
-    for(int val : valIdx.keySet()) {
-      if(valIdx.get(val) == null) {
+    for(int cur : map.keySet()) {
+      if(map.get(cur) == null) {
         continue;
       }
-      int lRt = 0;
-      int nVal = val;
-      while(valIdx.get(nVal) != null) {
-        valIdx.put(nVal, null);
-        nVal++;
+      int lCur = cur, lRt = 1;
+      map.put(lCur, null);
+      while(map.get(lCur + 1) != null) {
         lRt++;
+        lCur++;
+        map.put(lCur, null);
       }
-      nVal = val - 1;
-      while(valIdx.get(nVal) != null) {
-        valIdx.put(nVal, null);
-        nVal--;
+      lCur = cur;
+      while(map.get(lCur - 1) != null) {
         lRt++;
+        lCur--;
+        map.put(lCur, null);
       }
+
       rt = Math.max(rt, lRt);
     }
 
     return rt;
+    /*
+      //FIXME #202 TC runtime too much
+    Set<Integer> set = new HashSet<>(A);
+    int rt = 0;
+    while(!set.isEmpty()) {
+      int cur = set.iterator().next();
+      set.remove(cur);
+      int lRt = 1, lCur = cur;
+      while(set.contains(lCur + 1)) {
+        lRt++;
+        lCur++;
+        set.remove(lCur);
+      }
+
+      lCur = cur;
+      while(set.contains(lCur - 1)) {
+        lRt++;
+        lCur--;
+        set.remove(lCur);
+      }
+
+      rt = Math.max(lRt, rt);
+    }
+
+    return rt;
+     */
   }
 
   public static void main(String[] args) {
