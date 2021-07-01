@@ -11,41 +11,32 @@ public class CollatzChecker {
   @EpiTest(testDataFile = "collatz_checker.tsv")
 
   public static boolean testCollatzConjecture(int n) {
-    if(cache.containsKey(n)) {
-      return cache.get(n);
-    }
-    boolean rt = core(n);
-    cache.put(n, rt);
-    return rt;
+    return core(n);
   }
 
-  private static boolean core(long n) {
-    if(n == 1) {
-      return true;
-    } else if(n > Integer.MAX_VALUE) {
-      return false;
-    } else if(cache.containsKey(n)) {
+  private static boolean core(int n) {
+    if(cache.containsKey(n)) {
       return cache.get(n);
+    } else if(n == 1) {
+      return true;
+    } else if(n == 0) {
+      return false;
     }
 
-    if(n % 2 != 0) {
-      long nO = n * 3 + 1;
-      boolean rt = core(nO);
-      cache.put((int) nO, rt);
-      return rt;
+    if(n % 2 == 0) {
+      n /= 2;
     } else {
-      long nE = n / 2;
-      boolean rt = core(nE);
-      cache.put((int) nE, rt);
-      return rt;
+      n = n * 3 + 1;
     }
+    cache.put(n, core(n));
+    return cache.get(n);
   }
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "CollatzChecker.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+            GenericTest
+                    .runFromAnnotations(args, "CollatzChecker.java",
+                            new Object() {}.getClass().getEnclosingClass())
+                    .ordinal());
   }
 }
