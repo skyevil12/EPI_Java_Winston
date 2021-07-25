@@ -4,32 +4,32 @@ import epi.test_framework.GenericTest;
 
 import java.util.List;
 public class TwoSortedArraysMerge {
-  //T O(A + B)  S O(1)
+
   public static void mergeTwoSortedArrays(List<Integer> A, int m,
                                           List<Integer> B, int n) {
-    int iA = m - 1, iB = n - 1, idx = A.size() - 1;
+    /*
+      A (5,13,17, ) 7
+      B (3,7,11,19) 4
+     */
+    int rtIdx = m + n - 1;
 
+    int iA = m - 1, iB = n - 1;
+    //T O(M + N) S O(1)
     while(iA >= 0 && iB >= 0) {
-      int vA = A.get(iA), vB = B.get(iB);
-      if(vA >= vB) {
-        A.set(idx--, vA);
+      if(A.get(iA) > B.get(iB)) {
+        A.set(rtIdx, A.get(iA));
+        rtIdx--;
         iA--;
-      } else if(vB > vA) {
-        A.set(idx--, vB);
+      } else {
+        A.set(rtIdx, B.get(iB));
+        rtIdx--;
         iB--;
       }
     }
 
-    //This could be removed because iA should be equal to idx at this case
-//    while(iA >= 0) {
-//      int vA = A.get(iA);
-//      A.set(idx--, vA);
-//      iA--;
-//    }
-
     while(iB >= 0) {
-      int vB = B.get(iB);
-      A.set(idx--, vB);
+      A.set(rtIdx, B.get(iB));
+      rtIdx--;
       iB--;
     }
 
@@ -44,9 +44,9 @@ public class TwoSortedArraysMerge {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "TwoSortedArraysMerge.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+            GenericTest
+                    .runFromAnnotations(args, "TwoSortedArraysMerge.java",
+                            new Object() {}.getClass().getEnclosingClass())
+                    .ordinal());
   }
 }

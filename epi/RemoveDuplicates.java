@@ -5,7 +5,6 @@ import epi.test_framework.EpiTestExpectedType;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -49,19 +48,24 @@ public class RemoveDuplicates {
     }
   }
   public static void eliminateDuplicate(List<Name> names) {
-    //Better solution: update original list without using new tmp list
     //T O(NlogN)
-    Collections.sort(names);
+    Collections.sort(names, new Comparator<Name>(){
+      @Override
+      public int compare(Name o1, Name o2) {
+        return o1.firstName.compareTo(o2.firstName);
+      }
+    });
 
-    int idx = 0;
-    //T O(N)
+    int rIdx = 0;
+
     for(int i = 1; i < names.size(); i++) {
-      while(!names.get(i).firstName.equals(names.get(idx).firstName)) {
-        names.set(++idx, names.get(i));
+      if(!names.get(i).firstName.equals(names.get(rIdx).firstName)) {
+        names.set(++rIdx, names.get(i));
       }
     }
 
-    names.subList(idx + 1, names.size()).clear();
+    //Clear specific range of original list
+    names.subList(rIdx + 1, names.size()).clear();
     return;
   }
   @EpiTest(testDataFile = "remove_duplicates.tsv")
@@ -92,9 +96,9 @@ public class RemoveDuplicates {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "RemoveDuplicates.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+            GenericTest
+                    .runFromAnnotations(args, "RemoveDuplicates.java",
+                            new Object() {}.getClass().getEnclosingClass())
+                    .ordinal());
   }
 }

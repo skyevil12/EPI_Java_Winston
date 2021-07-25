@@ -22,9 +22,9 @@ public class CalendarRendering {
 
   private static class Endpoint {
     public int time;
-    public boolean isStart;
+    public int isStart;
 
-    Endpoint(int time, boolean isStart) {
+    Endpoint(int time, int isStart) {
       this.time = time;
       this.isStart = isStart;
     }
@@ -33,26 +33,26 @@ public class CalendarRendering {
   @EpiTest(testDataFile = "calendar_rendering.tsv")
 
   public static int findMaxSimultaneousEvents(List<Event> A) {
-    //T O(NlogN)  S O(N)
-    Queue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+    int lSum = 0, rt = 0;
+
+    Queue<Endpoint> pq = new PriorityQueue<>(new Comparator<Endpoint>() {
       @Override
-      public int compare(int[] o1, int[] o2) {
-        if(o1[0] == o2[0]) {
-          return o1[1] - o2[1];
+      public int compare(Endpoint o1, Endpoint o2) {
+        if(o1.time != o2.time) {
+          return o1.time - o2.time;
         }
-        return o1[0] - o2[0];
+
+        return o1.isStart - o2.isStart;
       }
     });
 
     for(Event e : A) {
-      pq.offer(new int[]{e.start, 1});
-      pq.offer(new int[]{e.finish + 1, -1});
+      pq.offer(new Endpoint(e.start, 1));
+      pq.offer(new Endpoint(e.finish + 1, -1));
     }
 
-    int lSum = 0, rt = 0;
-
     while(!pq.isEmpty()) {
-      lSum += pq.poll()[1];
+      lSum += pq.poll().isStart;
       rt = Math.max(rt, lSum);
     }
 
